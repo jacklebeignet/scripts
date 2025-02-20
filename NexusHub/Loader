@@ -1,5 +1,5 @@
 local scriptMappings = {
-    [189707] = "NDS"
+    [189707] = "NDS",  -- Example mapping: game ID to script name
 }
 
-local a=game.GameId;local b=scriptMappings[a]if b then local c="https://raw.githubusercontent.com/jacklebeignet/scripts/refs/heads/main/NexusHub/"..b;pcall(function()loadstring(game:HttpGet(c))()end)else print("Nexus Hub | No script found for this game :(")end
+local a=scriptMappings[game.PlaceId]if a then loadstring(game:HttpGet("https://raw.githubusercontent.com/jacklebeignet/scripts/refs/heads/main/NexusHub/"..a))()else warn("Nexus Hub | No script found for this game :(")warn("Nexus Hub | Join the Discord to see which games are supported: dsc.gg/beignet")end
