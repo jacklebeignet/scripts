@@ -3,6 +3,8 @@ Jack Le Beignet’s Scripts.
 
 ## Nexus Hub
 
+Currently supported games: 1
+
 [Source Code](https://github.com/jacklebeignet/scripts/tree/main/NexusHub)
 
 ```lua
