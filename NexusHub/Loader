@@ -1,1 +1,5 @@
+local scriptMappings = {
+    [1] = "NDS"
+}
 
+local a=game.GameId;local b=scriptMappings[a]if b then local c="https://raw.githubusercontent.com/jacklebeignet/scripts/refs/heads/main/NexusHub/"..b;pcall(function()loadstring(game:HttpGet(c))()end)else print("Nexus Hub | No script found for this game :(")end
