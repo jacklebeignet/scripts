@@ -1,5 +1,8 @@
+-- Nexus Hub | dsc.gg/beignet
+-- Currently supported games: 1
+
 local scriptMappings = {
-    [189707] = "NDS",  -- Example mapping: game ID to script name
+    [189707] = "NDS",
 }
 
 local a=scriptMappings[game.PlaceId]if a then loadstring(game:HttpGet("https://raw.githubusercontent.com/jacklebeignet/scripts/refs/heads/main/NexusHub/"..a))()else warn("Nexus Hub | No script found for this game :(")warn("Nexus Hub | Join the Discord to see which games are supported: dsc.gg/beignet")end
