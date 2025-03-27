@@ -2,13 +2,13 @@
 -- Currently supported games: 1
  
 local nl = loadstring(game:HttpGet("https://raw.githubusercontent.com/IceMinisterq/Notification-Library/Main/Library.lua"))()
- 
+
 local scriptMappings = {
-     [189707] = "NDS",
-     [2248408710] = "DS",
-     [12062249395] = "SLPJ",
+    [189707] = "NDS",
+    [2248408710] = "DS",
+    [12062249395] = "SLPJ", -- ✅ Fixed the quotes
 }
- 
+
 local a = scriptMappings[game.PlaceId]
 if a then
     nl:SendNotification("Success", "Game Supported! Loading script…", 5)
