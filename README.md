@@ -24,7 +24,7 @@ Inject Nexus Hub in your favourite game, and you're ready to go!
 
 Current Status: Active
 
-Currently supported games: 1
+Currently supported games: 3
 
 [Source Code](https://github.com/jacklebeignet/scripts/tree/main/NexusHub)
 
