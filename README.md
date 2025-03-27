@@ -6,6 +6,6 @@ I moved to GitHub, since it is a safe place for exploiters to upload their scrip
 Most of the scripts on here, are obsfucated; **I take every single code here important, and don't want any other people to take it.** I am currently using [MoonSec V3](https://discord.gg/kXqaQ2QzWz), which is a great obsfucator.
 
 Full List of my Active Scripts:
-- [Nexus Hub](https://github.com/jacklebeignet/scripts/blob/main/README.md#nexus-hub)
+- [Nexus Hub](https://github.com/jacklebeignet/scripts/blob/main/descriptions/nexushub.md)
 
 Enjoy the scripts on here!
