@@ -6,7 +6,7 @@ local nl = loadstring(game:HttpGet("https://raw.githubusercontent.com/IceMiniste
 local scriptMappings = {
     [189707] = "NDS",
     [2248408710] = "DS",
-    [12062249395] = "SLPJ", -- ✅ Fixed the quotes
+    [12062249395] = "SLPJ",
 }
 
 local a = scriptMappings[game.PlaceId]
