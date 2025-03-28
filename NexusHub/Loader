@@ -1,18 +1,12 @@
 -- Nexus Hub | dsc.gg/beignet
 -- Currently supported games: 1
- 
-local nl = loadstring(game:HttpGet("https://raw.githubusercontent.com/IceMinisterq/Notification-Library/Main/Library.lua"))()
 
-local scriptMappings = {
+local a=loadstring(game:HttpGet("https://raw.githubusercontent.com/IceMinisterq/Notification-Library/Main/Library.lua"))()
+
+local b={
     [189707] = "NDS",
     [2248408710] = "DS",
     [12062249395] = "SLPJ",
 }
 
-local a = scriptMappings[game.PlaceId]
-if a then
-    nl:SendNotification("Success", "Game Supported! Loading script…", 5)
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/jacklebeignet/scripts/refs/heads/main/NexusHub/" .. a))()
-else
-    nl:SendNotification("Error", "No script was found for this game :(\n\nJoin the Discord to see which games are supported: dsc.gg/beignet", 8)
-end
+local c=b[game.PlaceId]if c then a:SendNotification("Success","Game Supported! Loading script…",5)loadstring(game:HttpGet("https://raw.githubusercontent.com/jacklebeignet/scripts/refs/heads/main/NexusHub/"..c))()else a:SendNotification("Error","No script was found for this game :(\n\nJoin the Discord to see which games are supported: dsc.gg/beignet",8)end
