@@ -1,5 +1,5 @@
 -- Nexus Hub | dsc.gg/beignet
--- Currently supported games: 1
+-- Currently supported games: 5
 -- github.com/jacklebeignet/scripts/blob/main/NexusHub/README.md#instructions
 
 local a=loadstring(game:HttpGet("https://raw.githubusercontent.com/IceMinisterq/Notification-Library/Main/Library.lua"))()
