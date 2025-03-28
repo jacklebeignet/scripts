@@ -27,3 +27,6 @@ To directly execute Nexus Hub, use the following script:
 ```lua
 loadstring(game:HttpGet("https://raw.githubusercontent.com/jacklebeignet/scripts/refs/heads/main/NexusHub/Loader"))()
 ```
+
+> [!NOTE]
+> Nexus Hub is still in BETA. You might except some bugs in scripts. If you found one, make sure to report it to us!
