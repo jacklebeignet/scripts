@@ -2,7 +2,7 @@
 
 ## Description
 
-Nexus Hub is an innovative multi-game hub designed to support over 2+ games, ensuring a seamless user experience. This hub offers a wide range of features, all in one place, and is optimized for both desktop and mobile users. 
+Nexus Hub is an innovative multi-game hub designed to support over 3+ games, ensuring a seamless user experience. This hub offers a wide range of features, all in one place, and is optimized for both desktop and mobile users. 
 
 ### Key Features:
 - **Keyless Access**: Enjoy hassle-free access without the need for keys.
@@ -29,4 +29,4 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/jacklebeignet/scripts
 ```
 
 > [!NOTE]
-> Nexus Hub is still in BETA. You might except some bugs in scripts. If you found one, make sure to report it to us!
+> Nexus Hub is still in developement and we are working on it to add new games! You might except some bugs in scripts. If you found one, make sure to report it to us using the [GitHub Issues](https://github.com/jacklebeignet/scripts/issues/new)!
