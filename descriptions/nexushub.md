@@ -1,22 +1,28 @@
-# 🪐 Nexus Hub
+<h1 align="center">🪐 Nexus Hub</h1>
 
 ## Description
 
-Nexus Hub is a hub that supports over 2+ games, maintained to ensure a seamless user experience.
- 
-Nexus Hub offers players an selection of features in one single hub. This hub is completely keyless, and optimized for mobile users. Nexus Hub ensures compatibility with the latest game versions while prioritizing user security and functionality.
+Nexus Hub is an innovative multi-game hub designed to support over 2+ games, ensuring a seamless user experience. This hub offers a wide range of features, all in one place, and is optimized for both desktop and mobile users. 
 
-Inject Nexus Hub in your favourite game, and you're ready to go!
+### Key Features:
+- **Keyless Access**: Enjoy hassle-free access without the need for keys.
+- **Mobile Optimization**: Fully optimized for mobile devices, providing an excellent user experience on the go.
+- **Compatibility**: Ensures compatibility with the latest game versions, allowing you to stay up-to-date with your favorite games.
+
+Inject Nexus Hub into your favorite game, and enjoy a streamlined, efficient gaming experience!
 
 ## Status
 
-Current Status: Active
+- **Current Status**: Active
+- **Supported Games**: 3
 
-Currently supported games: 3
+## Links
 
-[Source Code](https://github.com/jacklebeignet/scripts/tree/main/NexusHub)
+- [Source Code (obfuscated)](https://github.com/jacklebeignet/scripts/tree/main/NexusHub)
 
-Directly Execute:
+## Instructions
+
+To directly execute Nexus Hub, use the following script:
 
 ```lua
 loadstring(game:HttpGet("https://raw.githubusercontent.com/jacklebeignet/scripts/refs/heads/main/NexusHub/Loader"))()
