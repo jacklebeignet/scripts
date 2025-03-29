@@ -1,5 +1,5 @@
 -- Nexus Hub | dsc.gg/beignet
--- Currently supported games: 5
+-- Currently supported games: 6
 -- github.com/jacklebeignet/scripts/blob/main/NexusHub/README.md#instructions
 
 local a=loadstring(game:HttpGet("https://raw.githubusercontent.com/IceMinisterq/Notification-Library/Main/Library.lua"))()
@@ -10,6 +10,7 @@ local b={
     [12062249395] = "SLPJ",
     [14901130314] = "ST",
     [16993432698] = "ISGGB2",
+    [87854376962069] = "T1MGB",
 }
 
 local c=b[game.PlaceId]if c then a:SendNotification("Success","Game Supported! Loading script…",5)loadstring(game:HttpGet("https://raw.githubusercontent.com/jacklebeignet/scripts/refs/heads/main/NexusHub/"..c))()else a:SendNotification("Error","No script was found for this game :(\n\nJoin the Discord to see which games are supported: dsc.gg/beignet",8)end
