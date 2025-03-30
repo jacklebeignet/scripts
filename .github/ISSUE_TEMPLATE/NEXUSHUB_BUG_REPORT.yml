@@ -16,10 +16,17 @@ body:
     validations:
       required: true
   - type: dropdown
-    id: browsers
+    id: devices
     attributes:
       label: What devices are you seeing the problem on?
       multiple: true
       options:
         - Mobile
         - Dekstop
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: Screenshots
+      description: Upload any screenshot here, it will help us identify the problem!
+    validations:
+      required: false
