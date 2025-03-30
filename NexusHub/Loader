@@ -3,7 +3,7 @@
 -- github.com/jacklebeignet/scripts/blob/main/NexusHub/README.md#instructions
 
 local v = "1.0"
-print("🪐 Nexus Hub Version:" .. v)
+print("🪐 Nexus Hub Version: " .. v)
 
 local a=loadstring(game:HttpGet("https://raw.githubusercontent.com/IceMinisterq/Notification-Library/Main/Library.lua"))()
 
