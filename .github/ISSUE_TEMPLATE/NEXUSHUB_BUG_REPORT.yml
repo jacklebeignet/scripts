@@ -1,6 +1,7 @@
-name: 🐛 Report a Bug
-description: Reporting bugs helps us improve Papillon!
+name: 🪐 Nexus Hub | Report a Bug
+description: Reporting bugs helps us improve Nexus Hub!
 title: "[Bug]: "
+labels: "bug"
 
 body:
   - type: textarea
