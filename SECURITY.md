@@ -1,6 +1,6 @@
 # Security Policy
 
-## Nexus Hub
+## 🪐 Nexus Hub
 
 ### Supported Versions
 
