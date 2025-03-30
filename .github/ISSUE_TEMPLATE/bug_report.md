@@ -1,7 +1,7 @@
 ---
-name: Bug report
+name: 🪐 Nexus Hub
 about: Create a report to help us improve
-title: ''
+title: '[Nexus Hub]'
 labels: bug
 assignees: ''
 
