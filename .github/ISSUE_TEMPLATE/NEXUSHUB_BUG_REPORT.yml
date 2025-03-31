@@ -8,6 +8,7 @@ body:
     attributes:
       label: Bug Description
       description: The more details you provide, the faster we can identify the bug!
+      placeholder: Nexus Hub is not working on a specific game.
     validations:
       required: true
 
@@ -26,6 +27,7 @@ body:
     attributes:
       label: Expected Behavior
       description: What should Nexus Hub do instead?
+      placeholder: Nexus Hub should work as expected.
     validations:
       required: true
 
@@ -33,7 +35,7 @@ body:
     attributes:
       label: Device
       description: On which device did you encounter this bug?
-      placeholder: iPhone 13, Samsung Galaxy S23...
+      placeholder: iPhone, Samsung, PC..
     validations:
       required: true
 
