@@ -254,7 +254,33 @@
             .script-description {
                 max-width: 100%;
             }
-        }
+
+            .button-group {
+                position: absolute;
+                top: 10px;
+                right: 10px;
+                display: flex;
+                gap: 5px;
+                z-index: 10;
+            }
+
+.github-button {
+    background-color: rgba(255, 255, 255, 0.1);
+    border: none;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.github-button:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
     </style>
 </head>
 <body>
@@ -271,30 +297,38 @@
         
         <main>
             <!-- Script 1 -->
-            <section class="script-section" id="script1">
-                <div class="orb" style="width: 300px; height: 300px; background: #ff6b6b; top: 20%; left: 10%;"></div>
-                <div class="script-content">
-                    <h2 class="script-title">Nexus Hub</h2>
-                    <p class="script-description">Nexus Hub is an innovative multi-game hub designed to support over 10+ games, ensuring a seamless user experience. This hub offers a wide range of features, all in one place, and is optimized for both desktop and mobile users.</p>
-                    <div class="script-tags">
-                        <span class="tag">Multi-Game Hub</span>
-                        <span class="tag">Mobile Optimization</span>
-                        <span class="tag">10+ Games</span>
-                    </div>
-                    <div class="script-preview">
-                        <button class="copy-button" id="copyButton">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
-                                <rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect>
-                            </svg>
-                            <span>Copy</span>
-                        </button>
-                        <pre><code id="scriptCode">
+<section class="script-section" id="script1">
+    <div class="orb" style="width: 300px; height: 300px; background: #ff6b6b; top: 20%; left: 10%;"></div>
+    <div class="script-content">
+        <h2 class="script-title">Nexus Hub</h2>
+        <p class="script-description">Nexus Hub is an innovative multi-game hub designed to support over 10+ games, ensuring a seamless user experience. This hub offers a wide range of features, all in one place, and is optimized for both desktop and mobile users.</p>
+        <div class="script-tags">
+            <span class="tag">Multi-Game Hub</span>
+            <span class="tag">Mobile Optimization</span>
+            <span class="tag">10+ Games</span>
+        </div>
+        <div class="script-preview">
+            <div class="button-group">
+                <button class="github-button" id="githubButton">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+                    </svg>
+                    <span>GitHub</span>
+                </button>
+                <button class="copy-button" id="copyButton">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
+                        <rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect>
+                    </svg>
+                    <span>Copy</span>
+                </button>
+            </div>
+            <pre><code id="scriptCode">
 <span class="lua-keyword">loadstring</span><span class="lua-operator">(</span><span class="lua-keyword">game</span><span class="lua-operator">:</span><span class="lua-function">HttpGet</span><span class="lua-operator">(</span><span class="lua-string">"https://raw.githubusercontent.com/jacklebeignet/scripts/refs/heads/main/NexusHub/Loader"</span><span class="lua-operator">)</span><span class="lua-operator">)</span><span class="lua-operator">(</span><span class="lua-operator">)</span>
-                        </code></pre>
-                    </div>
-                </div>
-            </section>
+            </code></pre>
+        </div>
+    </div>
+</section>
         </main>
         
         <footer>
