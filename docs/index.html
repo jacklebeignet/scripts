@@ -136,6 +136,38 @@
             opacity: 0.8;
         }
         
+        /* Copy button styles */
+        .copy-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: #fff;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: background-color 0.3s ease;
+            z-index: 10;
+        }
+        
+        .copy-button:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        .copy-button svg {
+            width: 14px;
+            height: 14px;
+        }
+        
+        .copy-button.copied {
+            background-color: rgba(80, 250, 123, 0.2);
+        }
+        
         @keyframes fadeInUp {
             to {
                 opacity: 1;
@@ -250,7 +282,14 @@
                         <span class="tag">10+ Games</span>
                     </div>
                     <div class="script-preview">
-                        <pre><code>
+                        <button class="copy-button" id="copyButton">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
+                                <rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect>
+                            </svg>
+                            <span>Copy</span>
+                        </button>
+                        <pre><code id="scriptCode">
 <span class="lua-keyword">loadstring</span><span class="lua-operator">(</span><span class="lua-keyword">game</span><span class="lua-operator">:</span><span class="lua-function">HttpGet</span><span class="lua-operator">(</span><span class="lua-string">"https://raw.githubusercontent.com/jacklebeignet/scripts/refs/heads/main/NexusHub/Loader"</span><span class="lua-operator">)</span><span class="lua-operator">)</span><span class="lua-operator">(</span><span class="lua-operator">)</span>
                         </code></pre>
                     </div>
@@ -284,6 +323,39 @@
                     }
                 });
             }
+            
+            // Copy to clipboard functionality
+            const copyButton = document.getElementById('copyButton');
+            const scriptCode = document.getElementById('scriptCode');
+            
+            copyButton.addEventListener('click', function() {
+                // Get the text content without the span tags
+                const codeText = scriptCode.textContent.trim();
+                
+                // Create a temporary textarea to copy from
+                const textarea = document.createElement('textarea');
+                textarea.value = codeText;
+                document.body.appendChild(textarea);
+                textarea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textarea);
+                
+                // Change button text to show it was copied
+                const originalText = copyButton.innerHTML;
+                copyButton.innerHTML = `
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#50fa7b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg>
+                    <span>Copied!</span>
+                `;
+                copyButton.classList.add('copied');
+                
+                // Reset button after 2 seconds
+                setTimeout(function() {
+                    copyButton.innerHTML = originalText;
+                    copyButton.classList.remove('copied');
+                }, 2000);
+            });
         });
     </script>
 </body>
