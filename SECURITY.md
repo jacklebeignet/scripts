@@ -1,6 +1,6 @@
-# Security Policy
+<h1 align="center">Security Policy</h1>
 
-## 🪐 Nexus Hub
+<h2 align="center">🪐 Nexus Hub</h2>
 
 ### Supported Versions
 
