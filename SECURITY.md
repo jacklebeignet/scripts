@@ -12,4 +12,4 @@ The versions below are the versions that are currently being supported or not wi
 
 ## Reporting a Vulnerability
 
-To report a vulnerability, please report it using [Github Issues](https://github.com/jacklebeignet/scripts/issues). You might get an response in less than 48 hours.
+To report a vulnerability, please report it on our [Discord Server](https://dsc.gg/beignet). You might get an response in less than 48 hours.
