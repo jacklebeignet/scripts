@@ -1,4 +1,4 @@
-# Scripts
+<h1 align="center">Scripts</h1>
 Hello! If you are reading this, you are in my repository, where I host most of my scripts. Pastebin unfortunately sucks, and takes down "malicious" lua code, while it isn't. 
 
 I moved to GitHub, since it is a safe place for exploiters to upload their script without getting any takedown and getting falsely removed.
