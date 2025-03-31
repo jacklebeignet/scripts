@@ -1,0 +1,42 @@
+name: "🪐 Nexus Hub | Feature Request"
+description: "Suggest a new feature or improvement for Nexus Hub"
+title: "[Nexus-Hub Feature]: "
+labels: ["enhancement"]
+assignees: []
+
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: "Describe the feature"
+      description: "What is the feature? How would it improve Nexus Hub?"
+      placeholder: "Explain your idea in detail..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: use-case
+    attributes:
+      label: "Use Case"
+      description: "How would this feature be useful? Who would benefit from it?"
+      placeholder: "Describe real-world scenarios where this feature is helpful..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: "Alternatives Considered"
+      description: "Have you considered other solutions or workarounds?"
+      placeholder: "List any alternative approaches you've thought about..."
+    validations:
+      required: false
+
+  - type: textarea
+    id: additional-info
+    attributes:
+      label: "Additional Information"
+      description: "Any other details, screenshots, or mockups?"
+      placeholder: "Optional: Attach images, links, or references..."
+    validations:
+      required: false
