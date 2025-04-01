@@ -90,8 +90,27 @@
             -webkit-text-fill-color: transparent;
             background-clip: text;
             text-shadow: 0 0 20px rgba(255, 107, 107, 0.2);
+            position: relative;
         }
-        
+
+        .script-title::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none; /* Allow pointer events to pass through */
+        }
+
+        .script-title:hover::before {
+            text-shadow: 0 0 25px rgba(255, 107, 107, 0.4);
+        }
+
+        .script-title:hover {
+            text-shadow: 0 0 25px rgba(255, 107, 107, 0.4);
+        }
+
         .script-description {
             font-size: 1.2rem;
             line-height: 1.6;
@@ -503,17 +522,6 @@
                 }, 2000);
             });
             
-            // Add subtle animations to elements on hover
-            const scriptTitle = document.querySelector('.script-title');
-            const scriptDescription = document.querySelector('.script-description');
-            
-            scriptTitle.addEventListener('mouseenter', function() {
-                this.style.textShadow = '0 0 25px rgba(255, 107, 107, 0.4)';
-            });
-            
-            scriptTitle.addEventListener('mouseleave', function() {
-                this.style.textShadow = '0 0 20px rgba(255, 107, 107, 0.2)';
-            });
         });
     </script>
 </body>
