@@ -14,7 +14,7 @@ Inject Nexus Hub into your favorite game, and enjoy a streamlined, efficient gam
 ## Status
 
 - **Current Status**: Active
-- **Supported Games**: 3
+- **Supported Games**: 10
 
 ## Links
 
