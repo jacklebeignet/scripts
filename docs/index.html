@@ -681,6 +681,53 @@
                     copyButton.classList.remove('copied');
                 }, 2000);
             });
+
+     document.addEventListener("DOMContentLoaded", function () {
+    const searchContainer = document.createElement("div");
+    searchContainer.style.position = "fixed";
+    searchContainer.style.top = "10px";
+    searchContainer.style.left = "50%";
+    searchContainer.style.transform = "translateX(-50%)";
+    searchContainer.style.padding = "10px";
+    searchContainer.style.background = "#fff";
+    searchContainer.style.border = "1px solid #ccc";
+    searchContainer.style.boxShadow = "0px 4px 6px rgba(0,0,0,0.1)";
+    searchContainer.style.display = "none"; // Initially hidden
+    searchContainer.style.zIndex = "1000";
+    
+    const searchInput = document.createElement("input");
+    searchInput.type = "text";
+    searchInput.id = "searchBar";
+    searchInput.placeholder = "Search...";
+    searchInput.style.padding = "5px";
+    searchInput.style.width = "200px";
+    searchInput.style.outline = "none";
+    searchInput.style.border = "1px solid #ccc";
+
+    searchContainer.appendChild(searchInput);
+    document.body.appendChild(searchContainer);
+
+    // Show search bar when pressing 'Ctrl + K' or '/'
+    document.addEventListener("keydown", function (event) {
+        if ((event.ctrlKey && event.key.toLowerCase() === "k") || event.key === "/") {
+            event.preventDefault(); // Prevent browser default (like quick find)
+            searchContainer.style.display = "block";
+            searchInput.focus();
+        } else if (event.key === "Escape") { // Hide on Escape key
+            searchContainer.style.display = "none";
+            searchInput.value = "";
+        }
+    });
+
+    // Filter items when typing
+    searchInput.addEventListener("input", function () {
+        const filter = searchInput.value.toLowerCase();
+        const items = document.querySelectorAll(".search-item"); // Adjust the selector
+        items.forEach(item => {
+            item.style.display = item.textContent.toLowerCase().includes(filter) ? "" : "none";
+        });
+    });
+});
             
         });
     </script>
