@@ -1,528 +1,622 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jack le Beignet | Scripts Showcase</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-            scroll-behavior: smooth;
-        }
-        
-        body {
-            background-color: #000;
-            color: #fff;
-            overflow-x: hidden;
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-        
-        header {
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-        }
-        
-        h1 {
-            font-size: 5rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            opacity: 0;
-            transform: translateY(30px);
-            animation: fadeInUp 1s ease-out forwards;
-        }
-        
-        .tagline {
-            font-size: 1.5rem;
-            font-weight: 300;
-            margin-bottom: 2rem;
-            opacity: 0;
-            transform: translateY(30px);
-            animation: fadeInUp 1s ease-out 0.3s forwards;
-        }
-        
-        .scroll-indicator {
-            position: absolute;
-            bottom: 40px;
-            animation: bounce 2s infinite;
-            opacity: 0;
-            animation-delay: 1.5s;
-            animation-fill-mode: forwards;
-            cursor: pointer;
-        }
-        
-        .script-section {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            padding: 2rem 0;
-            position: relative;
-        }
-        
-        .script-content {
-            width: 100%;
-            opacity: 0;
-            transform: translateY(40px);
-            transition: opacity 1s ease-out, transform 1s ease-out;
-        }
-        
-        .visible .script-content {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        
-        .script-title {
-            font-size: 3rem;
-            margin-bottom: 1.5rem;
-            background: linear-gradient(90deg, #ff6b6b, #4ecdc4);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            text-shadow: 0 0 20px rgba(255, 107, 107, 0.2);
-            position: relative;
-        }
-
-        .script-title::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            pointer-events: none; /* Allow pointer events to pass through */
-        }
-
-        .script-title:hover::before {
-            text-shadow: 0 0 25px rgba(255, 107, 107, 0.4);
-        }
-
-        .script-title:hover {
-            text-shadow: 0 0 25px rgba(255, 107, 107, 0.4);
-        }
-
-        .script-description {
-            font-size: 1.2rem;
-            line-height: 1.6;
-            margin-bottom: 2rem;
-            max-width: 70%;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-        }
-        
-        .script-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-bottom: 2rem;
-        }
-        
-        .tag {
-            padding: 5px 15px;
-            border-radius: 20px;
-            background-color: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(5px);
-            font-size: 0.9rem;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-            transition: all 0.3s ease;
-        }
-        
-        .tag:hover {
-            transform: translateY(-2px);
-            background-color: rgba(255, 255, 255, 0.15);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-        }
-        
-        .script-preview {
-            background-color: rgba(255, 255, 255, 0.05);
-            padding: 20px;
-            border-radius: 10px;
-            overflow: hidden;
-            position: relative;
-            max-height: 300px;
-            overflow-y: auto;
-            font-family: monospace;
-            color: #f8f8f2;
-            line-height: 1.5;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), inset 0 1px 1px rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-        }
-        
-        .script-preview::-webkit-scrollbar {
-            width: 8px;
-        }
-        
-        .script-preview::-webkit-scrollbar-track {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 4px;
-        }
-        
-        .script-preview::-webkit-scrollbar-thumb {
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 4px;
-        }
-        
-        .script-preview::-webkit-scrollbar-thumb:hover {
-            background: rgba(255, 255, 255, 0.3);
-        }
-        
-        .script-preview:before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(transparent 70%, #000);
-            pointer-events: none;
-            opacity: 0.8;
-        }
-        
-        /* Copy button styles */
-        .copy-button {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background-color: rgba(255, 255, 255, 0.1);
-            border: none;
-            color: #fff;
-            padding: 5px 10px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 0.8rem;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            transition: all 0.3s ease;
-            z-index: 10;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-            backdrop-filter: blur(5px);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-        }
-        
-        .copy-button:hover {
-            background-color: rgba(255, 255, 255, 0.2);
-            transform: translateY(-1px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-        }
-        
-        .copy-button svg {
-            width: 14px;
-            height: 14px;
-        }
-        
-        .copy-button.copied {
-            background-color: rgba(80, 250, 123, 0.2);
-        }
-        
-        /* GitHub Button Styles */
-        .github-button {
-            display: inline-flex;
-            align-items: center;
-            background-color: #24292e;
-            color: #fff;
-            border: none;
-            border-radius: 6px;
-            padding: 10px 18px;
-            font-size: 1rem;
-            font-weight: 500;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            margin-bottom: 2rem;
-            gap: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .github-button:before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(to bottom, rgba(255, 255, 255, 0.1), transparent);
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-        
-        .github-button:hover {
-            background-color: #383f45;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 14px rgba(0, 0, 0, 0.4);
-        }
-        
-        .github-button:hover:before {
-            opacity: 1;
-        }
-        
-        .github-button:active {
-            transform: translateY(0);
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-        }
-        
-        .github-button svg {
-            width: 20px;
-            height: 20px;
-            filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.3));
-            transition: transform 0.3s ease;
-        }
-        
-        .github-button:hover svg {
-            transform: rotate(-3deg) scale(1.1);
-        }
-        
-        @keyframes fadeInUp {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% {
-                transform: translateY(0);
-                opacity: 0.5;
-            }
-            40% {
-                transform: translateY(-20px);
-                opacity: 1;
-            }
-            60% {
-                transform: translateY(-10px);
-                opacity: 1;
-            }
-        }
-        
-        /* Add blurry orbs for Apple-like aesthetic */
-        .orb {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(80px);
-            z-index: -1;
-            opacity: 0.4;
-            transition: all 5s ease-in-out;
-        }
-        
-        .script-section:hover .orb {
-            transform: translateX(30px) translateY(-20px);
-        }
-
-        .lua-keyword {
-            color: #ff79c6;
-        }
-        
-        .lua-function {
-            color: #50fa7b;
-        }
-        
-        .lua-string {
-            color: #f1fa8c;
-        }
-        
-        .lua-number {
-            color: #bd93f9;
-        }
-        
-        .lua-comment {
-            color: #6272a4;
-        }
-        
-        .lua-operator {
-            color: #ff79c6;
-        }
-        
-        .lua-roblox {
-            color: #8be9fd;
-        }
-        
-        .lua-property {
-            color: #ffb86c;
-        }
-        
-        footer {
-            text-align: center;
-            padding: 4rem 0;
-            opacity: 0.7;
-            font-size: 0.9rem;
-            letter-spacing: 1px;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-        }
-        
-        /* Grain overlay */
-        body:after {
-            content: "";
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-            opacity: 0.03;
-            pointer-events: none;
-            z-index: 1000;
-        }
-        
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            h1 {
-                font-size: 3rem;
-            }
-            
-            .tagline {
-                font-size: 1.2rem;
-            }
-            
-            .script-title {
-                font-size: 2rem;
-            }
-            
-            .script-description {
-                max-width: 100%;
-            }
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <header>
-            <h1>Beignet Scripts</h1>
+   <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Jack le Beignet | Scripts Showcase</title>
+      <style>
+         * {
+         margin: 0;
+         padding: 0;
+         box-sizing: border-box;
+         font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+         scroll-behavior: smooth;
+         }
+         body {
+         background-color: #000;
+         color: #fff;
+         overflow-x: hidden;
+         }
+         .container {
+         max-width: 1200px;
+         margin: 0 auto;
+         padding: 20px;
+         }
+         header {
+         height: 100vh;
+         display: flex;
+         flex-direction: column;
+         justify-content: center;
+         align-items: center;
+         text-align: center;
+         }
+         h1 {
+         font-size: 5rem;
+         font-weight: 700;
+         margin-bottom: 1rem;
+         opacity: 0;
+         transform: translateY(30px);
+         animation: fadeInUp 1s ease-out forwards;
+         }
+         .tagline {
+         font-size: 1.5rem;
+         font-weight: 300;
+         margin-bottom: 2rem;
+         opacity: 0;
+         transform: translateY(30px);
+         animation: fadeInUp 1s ease-out 0.3s forwards;
+         }
+         .scroll-indicator {
+         position: absolute;
+         bottom: 40px;
+         animation: bounce 2s infinite;
+         opacity: 0;
+         animation-delay: 1.5s;
+         animation-fill-mode: forwards;
+         cursor: pointer;
+         }
+         .script-section {
+         min-height: 100vh;
+         display: flex;
+         align-items: center;
+         padding: 2rem 0;
+         position: relative;
+         }
+         .script-content {
+         width: 100%;
+         opacity: 0;
+         transform: translateY(40px);
+         transition: opacity 1s ease-out, transform 1s ease-out;
+         }
+         .visible .script-content {
+         opacity: 1;
+         transform: translateY(0);
+         }
+         .script-title {
+         font-size: 3rem;
+         margin-bottom: 1.5rem;
+         background: linear-gradient(90deg, #ff6b6b, #4ecdc4);
+         -webkit-background-clip: text;
+         -webkit-text-fill-color: transparent;
+         background-clip: text;
+         text-shadow: 0 0 20px rgba(255, 107, 107, 0.2);
+         position: relative;
+         }
+         .script-title::before {
+         content: '';
+         position: absolute;
+         top: 0;
+         left: 0;
+         right: 0;
+         bottom: 0;
+         pointer-events: none; /* Allow pointer events to pass through */
+         }
+         .script-title:hover::before {
+         text-shadow: 0 0 25px rgba(255, 107, 107, 0.4);
+         }
+         .script-title:hover {
+         text-shadow: 0 0 25px rgba(255, 107, 107, 0.4);
+         }
+         .script-description {
+         font-size: 1.2rem;
+         line-height: 1.6;
+         margin-bottom: 2rem;
+         max-width: 70%;
+         text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+         }
+         .script-tags {
+         display: flex;
+         flex-wrap: wrap;
+         gap: 10px;
+         margin-bottom: 2rem;
+         }
+         .tag {
+         padding: 5px 15px;
+         border-radius: 20px;
+         background-color: rgba(255, 255, 255, 0.1);
+         backdrop-filter: blur(5px);
+         font-size: 0.9rem;
+         border: 1px solid rgba(255, 255, 255, 0.05);
+         box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+         transition: all 0.3s ease;
+         }
+         .tag:hover {
+         transform: translateY(-2px);
+         background-color: rgba(255, 255, 255, 0.15);
+         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+         }
+         .script-preview {
+         background-color: rgba(255, 255, 255, 0.05);
+         padding: 20px;
+         border-radius: 10px;
+         overflow: hidden;
+         position: relative;
+         max-height: 300px;
+         overflow-y: auto;
+         font-family: monospace;
+         color: #f8f8f2;
+         line-height: 1.5;
+         box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), inset 0 1px 1px rgba(255, 255, 255, 0.1);
+         border: 1px solid rgba(255, 255, 255, 0.05);
+         }
+         .script-preview::-webkit-scrollbar {
+         width: 8px;
+         }
+         .script-preview::-webkit-scrollbar-track {
+         background: rgba(255, 255, 255, 0.05);
+         border-radius: 4px;
+         }
+         .script-preview::-webkit-scrollbar-thumb {
+         background: rgba(255, 255, 255, 0.2);
+         border-radius: 4px;
+         }
+         .script-preview::-webkit-scrollbar-thumb:hover {
+         background: rgba(255, 255, 255, 0.3);
+         }
+         .script-preview:before {
+         content: "";
+         position: absolute;
+         top: 0;
+         left: 0;
+         width: 100%;
+         height: 100%;
+         background: linear-gradient(transparent 70%, #000);
+         pointer-events: none;
+         opacity: 0.8;
+         }
+         /* Copy button styles */
+         .copy-button {
+         position: absolute;
+         top: 10px;
+         right: 10px;
+         background-color: rgba(255, 255, 255, 0.1);
+         border: none;
+         color: #fff;
+         padding: 5px 10px;
+         border-radius: 5px;
+         cursor: pointer;
+         font-size: 0.8rem;
+         display: flex;
+         align-items: center;
+         gap: 5px;
+         transition: all 0.3s ease;
+         z-index: 10;
+         box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+         backdrop-filter: blur(5px);
+         border: 1px solid rgba(255, 255, 255, 0.05);
+         }
+         .copy-button:hover {
+         background-color: rgba(255, 255, 255, 0.2);
+         transform: translateY(-1px);
+         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+         }
+         .copy-button svg {
+         width: 14px;
+         height: 14px;
+         }
+         .copy-button.copied {
+         background-color: rgba(80, 250, 123, 0.2);
+         }
+         /* GitHub Button Styles */
+         .github-button {
+         display: inline-flex;
+         align-items: center;
+         background-color: #24292e;
+         color: #fff;
+         border: none;
+         border-radius: 6px;
+         padding: 10px 18px;
+         font-size: 1rem;
+         font-weight: 500;
+         text-decoration: none;
+         transition: all 0.3s ease;
+         margin-bottom: 2rem;
+         gap: 10px;
+         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+         position: relative;
+         overflow: hidden;
+         }
+         .github-button:before {
+         content: "";
+         position: absolute;
+         top: 0;
+         left: 0;
+         width: 100%;
+         height: 100%;
+         background: linear-gradient(to bottom, rgba(255, 255, 255, 0.1), transparent);
+         opacity: 0;
+         transition: opacity 0.3s ease;
+         }
+         .github-button:hover {
+         background-color: #383f45;
+         transform: translateY(-2px);
+         box-shadow: 0 6px 14px rgba(0, 0, 0, 0.4);
+         }
+         .github-button:hover:before {
+         opacity: 1;
+         }
+         .github-button:active {
+         transform: translateY(0);
+         box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+         }
+         .github-button svg {
+         width: 20px;
+         height: 20px;
+         filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.3));
+         transition: transform 0.3s ease;
+         }
+         .github-button:hover svg {
+         transform: rotate(-3deg) scale(1.1);
+         }
+         @keyframes fadeInUp {
+         to {
+         opacity: 1;
+         transform: translateY(0);
+         }
+         }
+         @keyframes bounce {
+         0%, 20%, 50%, 80%, 100% {
+         transform: translateY(0);
+         opacity: 0.5;
+         }
+         40% {
+         transform: translateY(-20px);
+         opacity: 1;
+         }
+         60% {
+         transform: translateY(-10px);
+         opacity: 1;
+         }
+         }
+         /* Add blurry orbs for Apple-like aesthetic */
+         .orb {
+         position: absolute;
+         border-radius: 50%;
+         filter: blur(80px);
+         z-index: -1;
+         opacity: 0.4;
+         transition: all 5s ease-in-out;
+         }
+         .script-section:hover .orb {
+         transform: translateX(30px) translateY(-20px);
+         }
+         .lua-keyword {
+         color: #ff79c6;
+         }
+         .lua-function {
+         color: #50fa7b;
+         }
+         .lua-string {
+         color: #f1fa8c;
+         }
+         .lua-number {
+         color: #bd93f9;
+         }
+         .lua-comment {
+         color: #6272a4;
+         }
+         .lua-operator {
+         color: #ff79c6;
+         }
+         .lua-roblox {
+         color: #8be9fd;
+         }
+         .lua-property {
+         color: #ffb86c;
+         }
+         footer {
+         text-align: center;
+         padding: 4rem 0;
+         opacity: 0.7;
+         font-size: 0.9rem;
+         letter-spacing: 1px;
+         text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+         }
+         /* Grain overlay */
+         body:after {
+         content: "";
+         position: fixed;
+         top: 0;
+         left: 0;
+         width: 100%;
+         height: 100%;
+         background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+         opacity: 0.03;
+         pointer-events: none;
+         z-index: 1000;
+         }
+         /* Responsive Design */
+         @media (max-width: 768px) {
+         h1 {
+         font-size: 3rem;
+         }
+         .tagline {
+         font-size: 1.2rem;
+         }
+         .script-title {
+         font-size: 2rem;
+         }
+         .script-description {
+         max-width: 100%;
+         }
+         }
+         .header-title {
+         position: relative;
+         font-size: 5rem;
+         font-weight: 700;
+         margin-bottom: 1rem;
+         }
+         .header-title .letter {
+         display: inline-block;
+         opacity: 0;
+         transform: translateY(50px) rotate(10deg);
+         background: linear-gradient(90deg, #ff6b6b, #4ecdc4);
+         -webkit-background-clip: text;
+         -webkit-text-fill-color: transparent;
+         background-clip: text;
+         transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+         text-shadow: 0 0 20px rgba(255, 107, 107, 0.2);
+         filter: blur(5px);
+         }
+         @keyframes glow {
+         0%, 100% {
+         text-shadow: 0 0 10px rgba(255, 107, 107, 0.2);
+         }
+         50% {
+         text-shadow: 0 0 20px rgba(255, 107, 107, 0.6), 0 0 30px rgba(78, 205, 196, 0.4);
+         }
+         }
+         /* Animated background particles */
+         .particles {
+         position: absolute;
+         width: 100%;
+         height: 100%;
+         top: 0;
+         left: 0;
+         overflow: hidden;
+         z-index: -1;
+         }
+         .particle {
+         position: absolute;
+         width: 3px;
+         height: 3px;
+         background: rgba(255, 255, 255, 0.5);
+         border-radius: 50%;
+         animation: float 15s infinite linear;
+         }
+         @keyframes float {
+         0% {
+         transform: translateY(100vh) translateX(0);
+         opacity: 0;
+         }
+         10% {
+         opacity: 1;
+         }
+         90% {
+         opacity: 1;
+         }
+         100% {
+         transform: translateY(-100px) translateX(100px);
+         opacity: 0;
+         }
+         }
+         /* Header background gradients */
+         .header-bg {
+         position: absolute;
+         width: 100%;
+         height: 100%;
+         top: 0;
+         left: 0;
+         z-index: -2;
+         }
+         .header-orb {
+         position: absolute;
+         border-radius: 50%;
+         filter: blur(80px);
+         opacity: 0.4;
+         animation: pulse 10s infinite alternate;
+         }
+         @keyframes pulse {
+         0% {
+         transform: scale(1) translateX(0);
+         opacity: 0.3;
+         }
+         50% {
+         transform: scale(1.1) translateX(20px);
+         opacity: 0.5;
+         }
+         100% {
+         transform: scale(1) translateX(-20px);
+         opacity: 0.3;
+         }
+         }
+      </style>
+   </head>
+   <body>
+      <div class="container">
+         <header>
+            <div class="particles" id="particles"></div>
+            <div class="header-bg">
+               <div class="header-orb" style="width: 400px; height: 400px; background: linear-gradient(135deg, #ff6b6b, #a85fff); top: 10%; left: -10%;"></div>
+               <div class="header-orb" style="width: 300px; height: 300px; background: linear-gradient(135deg, #4ecdc4, #3d6ced); bottom: 10%; right: -5%;"></div>
+            </div>
+            <h1 class="header-title" id="animatedTitle">Beignet Scripts</h1>
             <p class="tagline">Elegant. Powerful. Revolutionary.</p>
             <div class="scroll-indicator" id="scrollDownBtn">
-                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M12 5v14M5 12l7 7 7-7"/>
-                </svg>
+               <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 5v14M5 12l7 7 7-7"/>
+               </svg>
             </div>
-        </header>
-        
-        <main>
+         </header>
+         <main>
             <!-- Script 1 -->
             <section class="script-section" id="script1">
-                <div class="orb" style="width: 300px; height: 300px; background: linear-gradient(135deg, #ff6b6b, #a85fff); top: 20%; left: 10%;"></div>
-                <div class="orb" style="width: 200px; height: 200px; background: linear-gradient(135deg, #4ecdc4, #3d6ced); bottom: 10%; right: 15%;"></div>
-                <div class="script-content">
-                    <h2 class="script-title">Nexus Hub</h2>
-                    <p class="script-description">Nexus Hub is an innovative multi-game hub designed to support over 10+ games, ensuring a seamless user experience. This hub offers a wide range of features, all in one place, and is optimized for both desktop and mobile users.</p>
-                    
-                    <a href="https://github.com/jacklebeignet/scripts/tree/main/NexusHub" target="_blank" class="github-button">
+               <div class="orb" style="width: 300px; height: 300px; background: linear-gradient(135deg, #ff6b6b, #a85fff); top: 20%; left: 10%;"></div>
+               <div class="orb" style="width: 200px; height: 200px; background: linear-gradient(135deg, #4ecdc4, #3d6ced); bottom: 10%; right: 15%;"></div>
+               <div class="script-content">
+                  <h2 class="script-title">Nexus Hub</h2>
+                  <p class="script-description">Nexus Hub is an innovative multi-game hub designed to support over 10+ games, ensuring a seamless user experience. This hub offers a wide range of features, all in one place, and is optimized for both desktop and mobile users.</p>
+                  <a href="https://github.com/jacklebeignet/scripts/tree/main/NexusHub" target="_blank" class="github-button">
+                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+                     </svg>
+                     View on GitHub
+                  </a>
+                  <div class="script-tags">
+                     <span class="tag">Multi-Game Hub</span>
+                     <span class="tag">Mobile Optimization</span>
+                     <span class="tag">10+ Games</span>
+                  </div>
+                  <div class="script-preview">
+                     <button class="copy-button" id="copyButton">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+                           <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
+                           <rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect>
                         </svg>
-                        View on GitHub
-                    </a>
-                    
-                    <div class="script-tags">
-                        <span class="tag">Multi-Game Hub</span>
-                        <span class="tag">Mobile Optimization</span>
-                        <span class="tag">10+ Games</span>
-                    </div>
-                    <div class="script-preview">
-                        <button class="copy-button" id="copyButton">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
-                                <rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect>
-                            </svg>
-                            <span>Copy</span>
-                        </button>
-                        <pre><code id="scriptCode">
+                        <span>Copy</span>
+                     </button>
+                     <pre><code id="scriptCode">
 <span class="lua-keyword">loadstring</span><span class="lua-operator">(</span><span class="lua-keyword">game</span><span class="lua-operator">:</span><span class="lua-function">HttpGet</span><span class="lua-operator">(</span><span class="lua-string">"https://raw.githubusercontent.com/jacklebeignet/scripts/refs/heads/main/NexusHub/Loader"</span><span class="lua-operator">)</span><span class="lua-operator">)</span><span class="lua-operator">(</span><span class="lua-operator">)</span>
                         </code></pre>
-                    </div>
-                </div>
+                  </div>
+               </div>
             </section>
-        </main>
-        
-        <footer>
+         </main>
+         <footer>
             <p>© 2025 Jack le Beignet. All rights reserved.</p>
-        </footer>
-    </div>
-    
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const sections = document.querySelectorAll('.script-section');
-            const scrollBtn = document.getElementById('scrollDownBtn');
-            
-            // Smooth scroll to the first section when clicking the scroll indicator
-            scrollBtn.addEventListener('click', function() {
-                document.getElementById('script1').scrollIntoView({ behavior: 'smooth' });
-            });
-            
-            // Initial check for visible sections
-            checkVisibility();
-            
-            // Check visibility on scroll
-            window.addEventListener('scroll', checkVisibility);
-            
-            function checkVisibility() {
-                const triggerBottom = window.innerHeight * 0.8;
-                
-                sections.forEach(section => {
-                    const sectionTop = section.getBoundingClientRect().top;
-                    
-                    if (sectionTop < triggerBottom) {
-                        section.classList.add('visible');
-                    }
-                });
-            }
-            
-            // Parallax effect for orbs
-            window.addEventListener('mousemove', function(e) {
-                const orbs = document.querySelectorAll('.orb');
-                
-                orbs.forEach(orb => {
-                    const speed = orb.getAttribute('data-speed') || 0.05;
-                    const x = (window.innerWidth - e.pageX * speed) / 100;
-                    const y = (window.innerHeight - e.pageY * speed) / 100;
-                    
-                    orb.style.transform = `translateX(${x}px) translateY(${y}px)`;
-                });
-            });
-            
-            // Copy to clipboard functionality
-            const copyButton = document.getElementById('copyButton');
-            const scriptCode = document.getElementById('scriptCode');
-            
-            copyButton.addEventListener('click', function() {
-                // Get the text content without the span tags
-                const codeText = scriptCode.textContent.trim();
-                
-                // Create a temporary textarea to copy from
-                const textarea = document.createElement('textarea');
-                textarea.value = codeText;
-                document.body.appendChild(textarea);
-                textarea.select();
-                document.execCommand('copy');
-                document.body.removeChild(textarea);
-                
-                // Change button text to show it was copied
-                const originalText = copyButton.innerHTML;
-                copyButton.innerHTML = `
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#50fa7b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <polyline points="20 6 9 17 4 12"></polyline>
-                    </svg>
-                    <span>Copied!</span>
-                `;
-                copyButton.classList.add('copied');
-                
-                // Reset button after 2 seconds
-                setTimeout(function() {
-                    copyButton.innerHTML = originalText;
-                    copyButton.classList.remove('copied');
-                }, 2000);
-            });
-            
-        });
-    </script>
-</body>
+         </footer>
+      </div>
+      <script>
+         document.addEventListener('DOMContentLoaded', function() {
+             const sections = document.querySelectorAll('.script-section');
+             const scrollBtn = document.getElementById('scrollDownBtn');
+             
+             // Smooth scroll to the first section when clicking the scroll indicator
+             scrollBtn.addEventListener('click', function() {
+                 document.getElementById('script1').scrollIntoView({ behavior: 'smooth' });
+             });
+             
+             // Initial check for visible sections
+             checkVisibility();
+             
+             // Check visibility on scroll
+             window.addEventListener('scroll', checkVisibility);
+             
+             function checkVisibility() {
+                 const triggerBottom = window.innerHeight * 0.8;
+                 
+                 sections.forEach(section => {
+                     const sectionTop = section.getBoundingClientRect().top;
+                     
+                     if (sectionTop < triggerBottom) {
+                         section.classList.add('visible');
+                     }
+                 });
+             }
+             
+             // Parallax effect for orbs
+             window.addEventListener('mousemove', function(e) {
+                 const orbs = document.querySelectorAll('.orb');
+                 
+                 orbs.forEach(orb => {
+                     const speed = orb.getAttribute('data-speed') || 0.05;
+                     const x = (window.innerWidth - e.pageX * speed) / 100;
+                     const y = (window.innerHeight - e.pageY * speed) / 100;
+                     
+                     orb.style.transform = `translateX(${x}px) translateY(${y}px)`;
+                 });
+             });
+             
+             // Copy to clipboard functionality
+             const copyButton = document.getElementById('copyButton');
+             const scriptCode = document.getElementById('scriptCode');
+             
+             copyButton.addEventListener('click', function() {
+                 // Get the text content without the span tags
+                 const codeText = scriptCode.textContent.trim();
+                 
+                 // Create a temporary textarea to copy from
+                 const textarea = document.createElement('textarea');
+                 textarea.value = codeText;
+                 document.body.appendChild(textarea);
+                 textarea.select();
+                 document.execCommand('copy');
+                 document.body.removeChild(textarea);
+                 
+                 // Change button text to show it was copied
+                 const originalText = copyButton.innerHTML;
+                 copyButton.innerHTML = `
+                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#50fa7b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                         <polyline points="20 6 9 17 4 12"></polyline>
+                     </svg>
+                     <span>Copied!</span>
+                 `;
+                 copyButton.classList.add('copied');
+                 
+                 // Reset button after 2 seconds
+                 setTimeout(function() {
+                     copyButton.innerHTML = originalText;
+                     copyButton.classList.remove('copied');
+                 }, 2000);
+             });
+         
+             // Animate the title letters
+         const title = document.getElementById('animatedTitle');
+         const text = title.textContent;
+         title.innerHTML = '';
+         
+         // Create spans for each letter
+         for (let i = 0; i < text.length; i++) {
+         const letterSpan = document.createElement('span');
+         letterSpan.className = 'letter';
+         letterSpan.textContent = text[i] === ' ' ? '\u00A0' : text[i];
+         title.appendChild(letterSpan);
+         }
+         
+         // Animate each letter with delay
+         const letters = document.querySelectorAll('.letter');
+         letters.forEach((letter, index) => {
+         setTimeout(() => {
+         letter.style.opacity = '1';
+         letter.style.transform = 'translateY(0) rotate(0deg)';
+         letter.style.filter = 'blur(0)';
+         
+         // Add glow animation after letters appear
+         if (index === letters.length - 1) {
+             setTimeout(() => {
+                 title.style.animation = 'glow 3s ease-in-out infinite';
+             }, 500);
+         }
+         }, 100 + (index * 80));
+         });
+         
+         // Create background particles
+         const particlesContainer = document.getElementById('particles');
+         const particleCount = 30;
+         
+         for (let i = 0; i < particleCount; i++) {
+         const particle = document.createElement('div');
+         particle.className = 'particle';
+         
+         // Random position and delay
+         const size = Math.random() * 4 + 1;
+         const posX = Math.random() * 100;
+         const delay = Math.random() * 15;
+         const duration = Math.random() * 10 + 10;
+         const opacity = Math.random() * 0.5 + 0.3;
+         
+         particle.style.width = `${size}px`;
+         particle.style.height = `${size}px`;
+         particle.style.left = `${posX}%`;
+         particle.style.bottom = '-10px';
+         particle.style.opacity = opacity;
+         particle.style.animationDuration = `${duration}s`;
+         particle.style.animationDelay = `${delay}s`;
+         
+         particlesContainer.appendChild(particle);
+         }
+             
+         });
+      </script>
+   </body>
 </html>
