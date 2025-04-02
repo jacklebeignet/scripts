@@ -14,5 +14,6 @@ local b={
     [120390407164140]="1KECG",
     [18891217864]="CGBTR",
     [108223641520139]="456KSGGB",
+    [74860143302885]="GBPSG",
 }
 local c=b[game.PlaceId] if c then a:SendNotification("Success","Game Supported! Loading script…",5) loadstring(game:HttpGet("https://raw.githubusercontent.com/jacklebeignet/scripts/refs/heads/main/NexusHub/"..c))() else a:SendNotification("Error","No script was found for this game :(\n\nJoin the Discord to see which games are supported: dsc.gg/beignet",8) end end) if not success then warn("Error in script, please report it: "..err) end
