@@ -25,7 +25,7 @@ Inject Nexus Hub into your favorite game, and enjoy a streamlined, efficient gam
 To directly execute Nexus Hub, use the following script:
 
 ```lua
-loadstring(game:HttpGet("https://raw.githubusercontent.com/jacklebeignet/scripts/refs/heads/main/NexusHub/Loader"))()
+loadstring(game:HttpGet("https://wtf.skibiditoi.lat/s/nexus-hub.lua"))()
 ```
 
 > [!NOTE]
