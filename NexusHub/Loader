@@ -2,45 +2,57 @@
 -- Currently supported games: 10
 -- github.com/jacklebeignet/scripts/blob/main/NexusHub/README.md#instructions
 
-local v="1.0" print("🪐 Nexus Hub Version: "..v) local success,err=pcall(function() local a=loadstring(game:HttpGet("https://raw.githubusercontent.com/IceMinisterq/Notification-Library/Main/Library.lua"))()
-local b={
-    [189707]="NDS",
-    [2248408710]="DS",
-    [12062249395]="SLPJ",
-    [14901130314]="ST",
-    [16993432698]="ISGGB2",
-    [87854376962069]="T1MGB",
-    [110418140983965]="1PGB",
-    [120390407164140]="1KECG",
-    [18891217864]="CGBTR",
-    [108223641520139]="456KSGGB",
-    [74860143302885]="GBPSG",
-    [7946217289]="GB",
-}
+local v="1.0" 
+print("🪐 Nexus Hub Version: "..v) 
 
-local h=game:GetService("HttpService")
-
-local r = (syn and syn.request) 
-    or (http and http.request) 
-    or http_request 
-    or (fluxus and fluxus.request) 
-    or request
-
-if not r then warn("No HTTP request function")return end
-
-r({
-    Url = 'http://67.220.85.157:6283/track',
-    Method = 'POST',  -- Using POST method
-    Headers = {
-        ['Content-Type'] = 'application/json',
+local success, err = pcall(function()
+    local a=loadstring(game:HttpGet("https://raw.githubusercontent.com/IceMinisterq/Notification-Library/Main/Library.lua"))()
+    
+    local b={
+        [189707]="NDS",
+        [2248408710]="DS",
+        [12062249395]="SLPJ",
+        [14901130314]="ST",
+        [16993432698]="ISGGB2",
+        [87854376962069]="T1MGB",
+        [110418140983965]="1PGB",
+        [120390407164140]="1KECG",
+        [18891217864]="CGBTR",
+        [108223641520139]="456KSGGB",
+        [74860143302885]="GBPSG",
+        [7946217289]="GB",
     }
-})
 
-local c=b[game.PlaceId]
-if c then 
-    a:SendNotification("Success","Game Supported! Loading...",5)
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/jacklebeignet/scripts/main/NexusHub/"..c))()
-else 
-    a:SendNotification("Error","Game not supported\ndsc.gg/beignet",8)
+    local h=game:GetService("HttpService")
+
+    local r = (syn and syn.request) 
+        or (http and http.request) 
+        or http_request 
+        or (fluxus and fluxus.request) 
+        or request
+
+    if not r then 
+        warn("No HTTP request function")
+        return 
+    end
+
+    r({
+        Url = 'http://67.220.85.157:6283/track',
+        Method = 'POST',
+        Headers = {
+            ['Content-Type'] = 'application/json',
+        }
+    })
+
+    local c=b[game.PlaceId]
+    if c then 
+        a:SendNotification("Success","Game Supported! Loading...",5)
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/jacklebeignet/scripts/main/NexusHub/"..c))()
+    else 
+        a:SendNotification("Error","Game not supported\ndsc.gg/beignet",8)
+    end
+end)
+
+if not success then 
+    warn("Error: "..err)
 end
-if not success then warn("Error: "..err)end
