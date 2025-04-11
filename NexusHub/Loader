@@ -2,38 +2,46 @@
 -- Currently supported games: 10
 -- github.com/jacklebeignet/scripts/blob/main/NexusHub/README.md#instructions
 
-local v="1.0" 
-print("🪐 Nexus Hub Version: "..v) 
+local v = "1.0"
+print("🪐 Nexus Hub Version: " .. v)
 
 local success, err = pcall(function()
-    local a=loadstring(game:HttpGet("https://raw.githubusercontent.com/IceMinisterq/Notification-Library/Main/Library.lua"))()
-    
-    local b={
-        [189707]="NDS",
-        [2248408710]="DS",
-        [12062249395]="SLPJ",
-        [14901130314]="ST",
-        [16993432698]="ISGGB2",
-        [87854376962069]="T1MGB",
-        [110418140983965]="1PGB",
-        [120390407164140]="1KECG",
-        [18891217864]="CGBTR",
-        [108223641520139]="456KSGGB",
-        [74860143302885]="GBPSG",
-        [7946217289]="GB",
+    local a = loadstring(game:HttpGet("https://raw.githubusercontent.com/IceMinisterq/Notification-Library/Main/Library.lua"))()
+
+    local b = {
+        [189707] = "NDS",
+        [2248408710] = "DS",
+        [12062249395] = "SLPJ",
+        [14901130314] = "ST",
+        [16993432698] = "ISGGB2",
+        [87854376962069] = "T1MGB",
+        [110418140983965] = "1PGB",
+        [120390407164140] = "1KECG",
+        [18891217864] = "CGBTR",
+        [108223641520139] = "456KSGGB",
+        [74860143302885] = "GBPSG",
+        [7946217289] = "GB",
     }
 
-    local h=game:GetService("HttpService")
+    local h = game:GetService("HttpService")
 
-    local r = (syn and syn.request) 
-        or (http and http.request) 
-        or http_request 
-        or (fluxus and fluxus.request) 
+    local r = (syn and syn.request)
+        or (http and http.request)
+        or http_request
+        or (fluxus and fluxus.request)
         or request
 
-    if not r then 
+    if not r then
         warn("No HTTP request function")
-        return 
+        return
+    end
+
+    local c = b[game.PlaceId]
+    if c then
+        a:SendNotification("Success", "Game Supported! Loading...", 5)
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/jacklebeignet/scripts/main/NexusHub/" .. c))()
+    else
+        a:SendNotification("Error", "No script was found for this game :(\n\nJoin the Discord to see which games are supported: dsc.gg/beignet", 8)
     end
 
     r({
@@ -43,16 +51,8 @@ local success, err = pcall(function()
             ['Content-Type'] = 'application/json',
         }
     })
-
-    local c=b[game.PlaceId]
-    if c then 
-        a:SendNotification("Success","Game Supported! Loading...",5)
-        loadstring(game:HttpGet("https://raw.githubusercontent.com/jacklebeignet/scripts/main/NexusHub/"..c))()
-    else 
-        a:SendNotification("Error","No script was found for this game :(\n\nJoin the Discord to see which games are supported: dsc.gg/beignet",8)
-    end
 end)
 
-if not success then 
-    warn("Error: "..err)
+if not success then
+    warn("Error: " .. err)
 end
