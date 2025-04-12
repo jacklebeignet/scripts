@@ -39,3 +39,20 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/jacklebeignet/scripts
 
 > [!NOTE]
 > Nexus Hub is still in developement and we are working on it to add new games! You might except some bugs in scripts. If you found one, make sure to report it to us using the [GitHub Issues](https://github.com/jacklebeignet/scripts/issues/new)!
+
+## FAQ
+
+**Q: Will Nexus Hub support more games in the future?**
+A: Of course, this project will always be maintained.
+
+**Q: Will Nexus Hub always be free & keyless?**
+A: Yes, we have not planned any key system for now.
+
+**Q: Is Nexus Hub open-source?**
+A: Unfortunately, no. I obfuscated this script, since other people can take the project and just rename it, which I don't want to happen.
+
+**Q: Is Nexus Hub safe?**
+A: Yes, I always check the scripts before uploading it to GitHub.
+
+**Q: I found a bug in Nexus Hub. Where can I report it?**
+A: You can report it using GitHub Issues.
