@@ -21,6 +21,7 @@ local success, err = pcall(function()
         [108223641520139] = "456KSGGB",
         [74860143302885] = "GBPSG",
         [7946217289] = "GB",
+        [13307164400] = "FTK",
     }
 
     local r = (syn and syn.request)
