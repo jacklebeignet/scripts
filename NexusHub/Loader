@@ -1,5 +1,5 @@
 -- Nexus Hub | dsc.gg/beignet
--- Currently supported games: 12
+-- Currently supported games: 13
 -- github.com/jacklebeignet/scripts/blob/main/NexusHub/README.md#instructions
 
 local v = "1.0"
