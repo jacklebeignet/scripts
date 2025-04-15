@@ -22,17 +22,21 @@ jobs:
 
       - name: Set up Lua and luacheck
         run: |
+          # Install dependencies
           sudo apt-get update
-          sudo apt-get install -y lua5.3 liblua5.3-dev wget unzip
-          
-          wget https://luarocks.org/releases/luarocks-3.9.2.tar.gz
-          tar zxpf luarocks-3.9.2.tar.gz
-          cd luarocks-3.9.2
-          ./configure --with-lua-include=/usr/include/lua5.3
-          make
-          sudo make install
-          
+          sudo apt-get install -y lua5.3 liblua5.3-dev wget unzip build-essential
+
+          # Install luarocks
+          wget https://luarocks.org/releases/luarocks-3.11.1.tar.gz
+          tar zxpf luarocks-3.11.1.tar.gz
+          cd luarocks-3.11.1
+          ./configure && make && sudo make install
+
+          # Install luacheck via luarocks
           sudo luarocks install luacheck
+
+          # Verify installation of luacheck
+          luacheck --version
 
       - name: Lint Lua files and collect errors
         run: |
@@ -52,7 +56,7 @@ jobs:
           ISSUE_TITLE: "Luacheck found issues in NexusHub/"
         run: |
           if [ -s luacheck/errors.txt ]; then
-            body=$(cat luacheck/errors.txt | head -n 50 | sed 's/"/\\"/g' | sed 's/$/\\n/' | tr '\n' ' ' )
+            body=$(cat luacheck/errors.txt | head -n 50 | sed 's/"/\\"/g')
             issue_number=$(curl -s -H "Authorization: token $GH_TOKEN" \
               https://api.github.com/repos/${{ github.repository }}/issues \
               | jq ".[] | select(.title==\"$ISSUE_TITLE\") | .number")
@@ -62,14 +66,12 @@ jobs:
               curl -X PATCH -H "Authorization: token $GH_TOKEN" \
                    -H "Accept: application/vnd.github.v3+json" \
                    https://api.github.com/repos/${{ github.repository }}/issues/$issue_number \
-                   -d "{\"body\": \"$body\"}"
+                   -d "{\"body\": \"\`\`\`\n$body\n\`\`\`\"}"
             else
               echo "Creating new issue"
               curl -X POST -H "Authorization: token $GH_TOKEN" \
                    -H "Accept: application/vnd.github.v3+json" \
                    https://api.github.com/repos/${{ github.repository }}/issues \
-                   -d "{\"title\": \"$ISSUE_TITLE\", \"body\": \"$body\"}"
+                   -d "{\"title\": \"$ISSUE_TITLE\", \"body\": \"\`\`\`\n$body\n\`\`\`\"}"
             fi
-          else
-            echo "No errors found by luacheck."
           fi
