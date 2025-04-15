@@ -43,7 +43,7 @@ jobs:
           done
 
       - name: Create or update issue if errors are found
-        if: failure()
+        if: always()
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           ISSUE_TITLE: "Luacheck found issues in NexusHub/"
