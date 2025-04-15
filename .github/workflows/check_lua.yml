@@ -52,7 +52,7 @@ jobs:
           ISSUE_TITLE: "Luacheck found issues in NexusHub/"
         run: |
           if [ -s luacheck/errors.txt ]; then
-            body=$(cat luacheck/errors.txt | head -n 50 | sed 's/"/\\"/g')
+            body=$(cat luacheck/errors.txt | head -n 50 | sed 's/"/\\"/g' | sed 's/$/\\n/' | tr '\n' ' ' )
             issue_number=$(curl -s -H "Authorization: token $GH_TOKEN" \
               https://api.github.com/repos/${{ github.repository }}/issues \
               | jq ".[] | select(.title==\"$ISSUE_TITLE\") | .number")
@@ -62,12 +62,14 @@ jobs:
               curl -X PATCH -H "Authorization: token $GH_TOKEN" \
                    -H "Accept: application/vnd.github.v3+json" \
                    https://api.github.com/repos/${{ github.repository }}/issues/$issue_number \
-                   -d "{\"body\": \"\`\`\`\n$body\n\`\`\`\"}"
+                   -d "{\"body\": \"$body\"}"
             else
               echo "Creating new issue"
               curl -X POST -H "Authorization: token $GH_TOKEN" \
                    -H "Accept: application/vnd.github.v3+json" \
                    https://api.github.com/repos/${{ github.repository }}/issues \
-                   -d "{\"title\": \"$ISSUE_TITLE\", \"body\": \"\`\`\`\n$body\n\`\`\`\"}"
+                   -d "{\"title\": \"$ISSUE_TITLE\", \"body\": \"$body\"}"
             fi
+          else
+            echo "No errors found by luacheck."
           fi
