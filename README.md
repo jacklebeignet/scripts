@@ -25,3 +25,10 @@ Full List of my Active Scripts:
 - [🪐 Nexus Hub](https://github.com/jacklebeignet/scripts/blob/main/NexusHub/README.md)
 
 Enjoy the scripts on here!
+
+## ❤️ Contributors
+Thanks to all the contributors who can update my scripts!
+
+<a href="https://github.com/jacklebeignet/scripts/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=jacklebeignet/scripts" />
+</a>
