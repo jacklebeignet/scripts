@@ -32,3 +32,7 @@ Thanks to all the contributors who can update my scripts!
 <a href="https://github.com/jacklebeignet/scripts/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=jacklebeignet/scripts" />
 </a>
+
+## ⭐️ Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=jacklebeignet/scripts&type=Date)](https://www.star-history.com/#jacklebeignet/scripts&Date)
