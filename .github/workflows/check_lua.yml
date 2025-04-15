@@ -19,12 +19,11 @@ jobs:
 
       - name: Set up Lua and luacheck
         run: |
-          sudo apt update
-          sudo apt install -y lua5.1 lua5.1-dev
           curl -L https://github.com/mpeterv/luarocks/releases/download/v3.7.0/luarocks-3.7.0.tar.gz | tar xz
           cd luarocks-3.7.0
-          ./configure && make && sudo make install
-          luarocks install luacheck
+          ./configure --with-lua-include=/usr/include/lua5.3
+          make && sudo make install
+          sudo luarocks install luacheck
 
       - name: Lint Lua files and collect errors
         run: |
