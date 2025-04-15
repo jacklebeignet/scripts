@@ -1,4 +1,4 @@
-name: Check Number of 
+name: Check Number of Games in Nexus Hub
 
 on:
   push:
