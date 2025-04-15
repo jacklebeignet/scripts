@@ -1,0 +1,65 @@
+name: Lint Lua Scripts in NexusHub
+
+on:
+  push:
+    paths:
+      - 'NexusHub/**'
+  pull_request:
+    paths:
+      - 'NexusHub/**'
+  workflow_dispatch:
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Lua and luacheck
+        run: |
+          sudo apt update
+          sudo apt install -y lua5.1 lua5.1-dev
+          curl -L https://github.com/mpeterv/luarocks/releases/download/v3.7.0/luarocks-3.7.0.tar.gz | tar xz
+          cd luarocks-3.7.0
+          ./configure && make && sudo make install
+          luarocks install luacheck
+
+      - name: Lint Lua files and collect errors
+        run: |
+          mkdir -p luacheck
+          > luacheck/errors.txt
+          find NexusHub -type f | while read file; do
+            echo "Linting $file"
+            if ! luacheck "$file" >> luacheck/errors.txt 2>&1; then
+              echo "Errors in $file"
+            fi
+          done
+
+      - name: Create or update issue if errors are found
+        if: failure()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ISSUE_TITLE: "Luacheck found issues in NexusHub/"
+        run: |
+          if [ -s luacheck/errors.txt ]; then
+            body=$(cat luacheck/errors.txt | head -n 50 | sed 's/"/\\"/g')
+            issue_number=$(curl -s -H "Authorization: token $GH_TOKEN" \
+              https://api.github.com/repos/${{ github.repository }}/issues \
+              | jq ".[] | select(.title==\"$ISSUE_TITLE\") | .number")
+
+            if [ "$issue_number" ]; then
+              echo "Updating existing issue #$issue_number"
+              curl -X PATCH -H "Authorization: token $GH_TOKEN" \
+                   -H "Accept: application/vnd.github.v3+json" \
+                   https://api.github.com/repos/${{ github.repository }}/issues/$issue_number \
+                   -d "{\"body\": \"\`\`\`\n$body\n\`\`\`\"}"
+            else
+              echo "Creating new issue"
+              curl -X POST -H "Authorization: token $GH_TOKEN" \
+                   -H "Accept: application/vnd.github.v3+json" \
+                   https://api.github.com/repos/${{ github.repository }}/issues \
+                   -d "{\"title\": \"$ISSUE_TITLE\", \"body\": \"\`\`\`\n$body\n\`\`\`\"}"
+            fi
+          fi
