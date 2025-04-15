@@ -1,0 +1,68 @@
+name: Check Number of 
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+  
+permissions:
+  contents: write # Allows the workflow to write (commit and push changes)
+
+jobs:
+  check_nexushub:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Count files in NexusHub folder excluding Loader and README.md
+        id: count_files
+        run: |
+          # Count files in NexusHub excluding 'Loader' and 'README.md'
+          file_count=$(find NexusHub -type f ! -name "Loader" ! -name "README.md" | wc -l)
+          echo "File count in NexusHub excluding 'Loader' and 'README.md': $file_count"
+          echo "FILE_COUNT=$file_count" >> $GITHUB_ENV
+
+      - name: Verify number of games in Loader file and update if necessary
+        id: verify_loader
+        run: |
+          # Path to the 'Loader' file
+          loader_file="NexusHub/Loader"
+          if [ ! -f "$loader_file" ]; then
+            echo "Loader file not found!"
+            exit 1
+          fi
+          
+          # Get the second line from the 'Loader' file
+          second_line=$(sed -n '2p' "$loader_file")
+          expected_text="-- Currently supported games: $FILE_COUNT"
+          
+          # If the second line doesn't match, update it
+          if [[ "$second_line" != *"$expected_text"* ]]; then
+            echo "Updating the second line in Loader to the correct value."
+            # Replace the second line with the correct number of games (with comment syntax)
+            sed -i "2s|.*|-- Currently supported games: $FILE_COUNT|" "$loader_file"
+            git config --global user.email "actions@github.com"
+            git config --global user.name "GitHub Actions"
+            git add "$loader_file"
+            git commit -m "Update the number of supported games in Loader"
+            git push
+          else
+            echo "The second line in Loader is correct: $second_line"
+          fi
+
+      - name: Check if the number of files matches the expected count
+        run: |
+          # Check if the number of files matches the expected count (e.g., 13 games)
+          expected_file_count=13
+          if [ "$FILE_COUNT" -eq "$expected_file_count" ]; then
+            echo "The number of files matches the expected count: $FILE_COUNT"
+          else
+            echo "The number of files does not match the expected count. Found: $FILE_COUNT, expected: $expected_file_count"
+            exit 1
+          fi
