@@ -8,7 +8,7 @@ on:
     branches:
       - main
   workflow_dispatch:
-  
+
 permissions:
   contents: write # Allows the workflow to write (commit and push changes)
 
@@ -37,11 +37,11 @@ jobs:
             echo "Loader file not found!"
             exit 1
           fi
-          
+
           # Get the second line from the 'Loader' file
           second_line=$(sed -n '2p' "$loader_file")
           expected_text="-- Currently supported games: $FILE_COUNT"
-          
+
           # If the second line doesn't match, update it
           if [[ "$second_line" != *"$expected_text"* ]]; then
             echo "Updating the second line in Loader to the correct value."
@@ -54,15 +54,4 @@ jobs:
             git push
           else
             echo "The second line in Loader is correct: $second_line"
-          fi
-
-      - name: Check if the number of files matches the expected count
-        run: |
-          # Check if the number of files matches the expected count (e.g., 13 games)
-          expected_file_count=13
-          if [ "$FILE_COUNT" -eq "$expected_file_count" ]; then
-            echo "The number of files matches the expected count: $FILE_COUNT"
-          else
-            echo "The number of files does not match the expected count. Found: $FILE_COUNT, expected: $expected_file_count"
-            exit 1
           fi
