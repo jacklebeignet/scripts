@@ -9,6 +9,9 @@ on:
       - 'NexusHub/**'
   workflow_dispatch:
 
+permissions:
+  issues: write
+
 jobs:
   lint:
     runs-on: ubuntu-latest
