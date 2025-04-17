@@ -2,8 +2,7 @@
 -- Currently supported games: 14
 -- github.com/jacklebeignet/scripts/blob/main/NexusHub/README.md#instructions
 
-local v = "1.0"
-print("🪐 Nexus Hub Version: " .. v)
+local v="1.0"print("🪐 Nexus Hub Version: "..v)
 
 local success, err = pcall(function()
     local a = loadstring(game:HttpGet("https://raw.githubusercontent.com/IceMinisterq/Notification-Library/Main/Library.lua"))()
@@ -31,28 +30,9 @@ local success, err = pcall(function()
         or (fluxus and fluxus.request)
         or request
 
-    if not r then
-        warn("No HTTP request function found, executor is not supported.")
-        return
-    end
+  if not r then warn("No HTTP request function found, executor is not supported.")return end;local c=b[game.PlaceId]if c then a:SendNotification("Success","Game Supported! Loading...",5)loadstring(game:HttpGet("https://raw.githubusercontent.com/jacklebeignet/scripts/main/NexusHub/"..c))()else a:SendNotification("Error","No script was found for this game :(\n\nJoin the Discord to see which games are supported: dsc.gg/beignet",8)end
 
-    local c = b[game.PlaceId]
-    if c then
-        a:SendNotification("Success", "Game Supported! Loading...", 5)
-        loadstring(game:HttpGet("https://raw.githubusercontent.com/jacklebeignet/scripts/main/NexusHub/" .. c))()
-    else
-        a:SendNotification("Error", "No script was found for this game :(\n\nJoin the Discord to see which games are supported: dsc.gg/beignet", 8)
-    end
-
-    r({
-        Url = 'http://67.220.85.157:6283/track', -- This is used for analytics, no data is being sent!
-        Method = 'POST',
-        Headers = {
-            ['Content-Type'] = 'application/json',
-        }
-    })
+    r({Url='http://67.220.85.157:6283/track',Method='POST',Headers={['Content-Type']='application/json'}})
 end)
 
-if not success then
-    warn("Error: " .. err)
-end
+if not success then warn("Error: "..err)end
