@@ -1,3 +1,8 @@
+> [!WARNING]
+> I'm currently taking a break from Roblox, due to the [new anticheat update](https://devforum.roblox.com/t/an-update-on-automated-action-against-modified-clients/3640609) from Roblox that detects when you exploit (when you inject local scripts more specifically) on Roblox and can **IP ban** you. Right now, there are no safe options, so it's best that everbody waits until a bypass is being created.
+> 
+> My scripts will not be maintained for now, expect errors in my scripts as I cannot check for now. **Do not create issues or pull requests about this!**
+
 <h1 align="center">Scripts</h1>
 <p align="center"><strong>Elegant. Powerful. Revolutionary.</strong></p>
 
