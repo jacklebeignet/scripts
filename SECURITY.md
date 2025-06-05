@@ -1,13 +1,17 @@
-<h1 align="center">Security Policy</h1>
+# Security Policy
 
-### Supported Versions
+## Reporting a Security Issue
 
-The script versions listed below indicate which ones are currently supported with security updates and which are not.
+If you discover a security vulnerability in this repository or its scripts, please report it responsibly by contacting the maintainer directly at:
 
-| Version | Supported          |
-| ------- | ------------------ |
-| Nexus Hub 1.0.x   | :white_check_mark: |
+https://dsc.gg/beignet
 
-## Reporting a Vulnerability
+Please do **not** open a public issue for security problems.
 
-To report a vulnerability, please report it on our [Discord Server](https://dsc.gg/beignet). You might get an response in less than 48 hours.
+## Response
+
+We take security reports seriously and will respond around 3 to 4 business days to acknowledge your report and work with you to resolve the issue.
+
+## Disclaimer
+
+This repository contains exploit scripts and may violate Roblox's Terms of Service. Use and testing should be done with caution.
