@@ -1,14 +1,12 @@
 <h1 align="center">Security Policy</h1>
 
-<h2 align="center">🪐 Nexus Hub</h2>
-
 ### Supported Versions
 
-The versions below are the versions that are currently being supported or not with security updates.
+The script versions listed below indicate which ones are currently supported with security updates and which are not.
 
 | Version | Supported          |
 | ------- | ------------------ |
-| 1.0.x   | :white_check_mark: |
+| Nexus Hub 1.0.x   | :white_check_mark: |
 
 ## Reporting a Vulnerability
 
