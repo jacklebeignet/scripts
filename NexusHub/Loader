@@ -31,8 +31,6 @@ local success, err = pcall(function()
         or request
 
   if not r then warn("No HTTP request function found, executor is not supported.")return end;local c=b[game.PlaceId]if c then a:SendNotification("Success","Game Supported! Loading...",5)loadstring(game:HttpGet("https://raw.githubusercontent.com/jacklebeignet/scripts/main/NexusHub/"..c))()else a:SendNotification("Error","No script was found for this game :(\n\nJoin the Discord to see which games are supported: dsc.gg/beignet",8)end
-
-    r({Url='http://46.247.108.59:6237/track',Method='POST',Headers={['Content-Type']='application/json'}})
 end)
 
 if not success then warn("Error: "..err)end
