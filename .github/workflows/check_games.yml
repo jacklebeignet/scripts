@@ -55,3 +55,18 @@ jobs:
           else
             echo "The second line in Loader is correct: $second_line"
           fi
+
+      - name: Update Supported Games count in README.md
+        run: |
+          readme_file="NexusHub/README.md"
+          if [ ! -f "$readme_file" ]; then
+            echo "README.md not found!"
+            exit 1
+          fi
+
+          # This will replace the line that starts with '- **Supported Games**:'
+          sed -i "s|- \*\*Supported Games\*\*:.*|- **Supported Games**: $FILE_COUNT|" "$readme_file"
+
+          git add "$readme_file"
+          git commit -m "Update Supported Games count in README.md" || echo "No changes to commit"
+          git push
