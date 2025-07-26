@@ -24,15 +24,8 @@ local success, err = pcall(function()
         [14988593557] = "POP",
     }
 
-    local r = (syn and syn.request)
-        or (http and http.request)
-        or http_request
-        or (fluxus and fluxus.request)
-        or request
+    local c=b[game.PlaceId]if c then a:SendNotification("Success","Game Supported! Loading...",5)loadstring(game:HttpGet("https://raw.githubusercontent.com/jacklebeignet/scripts/main/NexusHub/"..c))()else a:SendNotification("Error","No script was found for this game :(\n\nJoin the Discord to see which games are supported: dsc.gg/beignet",8)end
 
-  if not r then warn("No HTTP request function found, executor is not supported.")return end;local c=b[game.PlaceId]if c then a:SendNotification("Success","Game Supported! Loading...",5)loadstring(game:HttpGet("https://raw.githubusercontent.com/jacklebeignet/scripts/main/NexusHub/"..c))()else a:SendNotification("Error","No script was found for this game :(\n\nJoin the Discord to see which games are supported: dsc.gg/beignet",8)end
-
-    r({Url='http://51.75.118.169:20009/track',Method='POST',Headers={['Content-Type']='application/json'}})
 end)
 
 if not success then warn("Error: "..err)end
