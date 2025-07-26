@@ -72,3 +72,23 @@ jobs:
           git config --global user.name "GitHub Actions"
           git commit -m "Update Supported Games count in README.md" || echo "No changes to commit"
           git push
+
+      - name: Update number of games in docs/index.html
+        run: |
+          index_file="docs/index.html"
+          if [ ! -f "$index_file" ]; then
+            echo "docs/index.html not found!"
+            exit 1
+          fi
+
+          # Update the script-description line (case-insensitive, flexible wording)
+          sed -i -E "s/(support over |supporting |supports |support )?[0-9]+(\+)? games/Nexus Hub is an innovative multi-game hub designed to support over $FILE_COUNT games/gI" "$index_file"
+
+          # Update the tag (e.g., "10+ Games")
+          sed -i -E "s/[0-9]+(\+)? Games/$FILE_COUNT Games/gI" "$index_file"
+
+          git add "$index_file"
+          git config --global user.email "actions@github.com"
+          git config --global user.name "GitHub Actions"
+          git commit -m "Update number of games in docs/index.html" || echo "No changes to commit"
+          git push
