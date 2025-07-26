@@ -2,11 +2,11 @@ name: Check Number of Games in Nexus Hub
 
 on:
   push:
-    branches:
-      - main
+    paths:
+      - 'NexusHub/**'
   pull_request:
-    branches:
-      - main
+    paths:
+      - 'NexusHub/**'
   workflow_dispatch:
 
 permissions:
