@@ -10,7 +10,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write # Allows the workflow to write (commit and push changes)
+  contents: write
 
 jobs:
   check_nexushub:
@@ -23,72 +23,54 @@ jobs:
       - name: Count files in NexusHub folder excluding Loader and README.md
         id: count_files
         run: |
-          # Count files in NexusHub excluding 'Loader' and 'README.md'
           file_count=$(find NexusHub -type f ! -name "Loader" ! -name "README.md" | wc -l)
-          echo "File count in NexusHub excluding 'Loader' and 'README.md': $file_count"
+          echo "File count: $file_count"
           echo "FILE_COUNT=$file_count" >> $GITHUB_ENV
 
-      - name: Verify number of games in Loader file and update if necessary
-        id: verify_loader
+      - name: Update Loader, README, and website
         run: |
-          # Path to the 'Loader' file
+          updated=false
+
+          git config --global user.email "actions@github.com"
+          git config --global user.name "GitHub Actions"
+
+          # Update Loader
           loader_file="NexusHub/Loader"
-          if [ ! -f "$loader_file" ]; then
-            echo "Loader file not found!"
-            exit 1
+          if [ -f "$loader_file" ]; then
+            expected="-- Currently supported games: $FILE_COUNT"
+            current=$(sed -n '2p' "$loader_file")
+            if [[ "$current" != *"$expected"* ]]; then
+              sed -i "2s|.*|$expected|" "$loader_file"
+              git add "$loader_file"
+              updated=true
+              echo "Updated Loader."
+            fi
           fi
 
-          # Get the second line from the 'Loader' file
-          second_line=$(sed -n '2p' "$loader_file")
-          expected_text="-- Currently supported games: $FILE_COUNT"
-
-          # If the second line doesn't match, update it
-          if [[ "$second_line" != *"$expected_text"* ]]; then
-            echo "Updating the second line in Loader to the correct value."
-            # Replace the second line with the correct number of games (with comment syntax)
-            sed -i "2s|.*|-- Currently supported games: $FILE_COUNT|" "$loader_file"
-            git config --global user.email "actions@github.com"
-            git config --global user.name "GitHub Actions"
-            git add "$loader_file"
-            git commit -m "Update the number of supported games in Loader"
-            git push
-          else
-            echo "The second line in Loader is correct: $second_line"
-          fi
-
-      - name: Update Supported Games count in README.md
-        run: |
+          # Update README
           readme_file="NexusHub/README.md"
-          if [ ! -f "$readme_file" ]; then
-            echo "README.md not found!"
-            exit 1
+          if [ -f "$readme_file" ]; then
+            sed -i "s|- \*\*Supported Games\*\*:.*|- **Supported Games**: $FILE_COUNT|" "$readme_file"
+            git add "$readme_file"
+            updated=true
+            echo "Updated README.md."
           fi
 
-          # This will replace the line that starts with '- **Supported Games**:'
-          sed -i "s|- \*\*Supported Games\*\*:.*|- **Supported Games**: $FILE_COUNT|" "$readme_file"
-
-          git add "$readme_file"
-          git config --global user.email "actions@github.com"
-          git config --global user.name "GitHub Actions"
-          git commit -m "Update Supported Games count in README.md" || echo "No changes to commit"
-          git push
-
-      - name: Update number of games in docs/index.html
-        run: |
+          # Update website
           index_file="docs/index.html"
-          if [ ! -f "$index_file" ]; then
-            echo "docs/index.html not found!"
-            exit 1
+          if [ -f "$index_file" ]; then
+            sed -i -E "s|Nexus Hub is an innovative multi-game hub designed to support over [0-9]+(\+)? games,?[^.]*\.?|Nexus Hub is an innovative multi-game hub designed to support over ${FILE_COUNT}+ games.|" "$index_file"
+            sed -i -E "s/[0-9]+(\+)? Games/${FILE_COUNT}+ Games/gI" "$index_file"
+            git add "$index_file"
+            updated=true
+            echo "Updated docs/index.html."
           fi
 
-          # Replace the description line with the correct number dynamically
-          sed -i -E "s|Nexus Hub is an innovative multi-game hub designed to support over [0-9]+(\+)? games,?[^.]*\.?|Nexus Hub is an innovative multi-game hub designed to support over ${FILE_COUNT}+ games.|" "$index_file"
-
-          # Replace the tag to use the correct dynamic count
-          sed -i -E "s/[0-9]+(\+)? Games/${FILE_COUNT}+ Games/gI" "$index_file"
-
-          git add "$index_file"
-          git config --global user.email "actions@github.com"
-          git config --global user.name "GitHub Actions"
-          git commit -m "Update number of games in docs/index.html" || echo "No changes to commit"
-          git push
+          if [ "$updated" = true ]; then
+            git diff --cached --quiet && echo "No changes detected." || (
+              git commit -m "Update supported games count across NexusHub"
+              git push
+            )
+          else
+            echo "No files needed updating."
+          fi
