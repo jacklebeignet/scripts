@@ -19,7 +19,7 @@ Hello! If you are reading this, you are in my repository, where I host most of m
 
 I moved to GitHub because it is a safe place for exploiters to upload their scripts without getting any takedown requests or being falsely removed.
 
-Most of the scripts here are obfuscated; **I take every single code here seriously and don't want any other people to take it.** I am currently using [MoonSec V3](https://discord.gg/kXqaQ2QzWz) for obfuscation.
+Most of the scripts here are obfuscated; **I take every single code here seriously and don't want any other people to take it.** I was using [MoonSec V3](https://discord.gg/kXqaQ2QzWz) for obfuscation, but now I use [WeAreDevs's obfuscator](https://wearedevs.net/obfuscator).
 
 Full List of my Active Scripts:
 - [🪐 Nexus Hub](https://github.com/jacklebeignet/scripts/blob/main/NexusHub/README.md)
