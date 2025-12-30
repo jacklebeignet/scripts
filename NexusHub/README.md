@@ -5,7 +5,7 @@
 
 ## Description
 
-Nexus Hub is an innovative multi-game hub designed to support over 18+ games, ensuring a seamless user experience. This hub offers a wide range of features, all in one place, and is optimized for both desktop and mobile users. 
+Nexus Hub is an innovative multi-game hub designed to support over 19+ games, ensuring a seamless user experience. This hub offers a wide range of features, all in one place, and is optimized for both desktop and mobile users. 
 
 ### Key Features:
 - **Keyless Access**: Enjoy hassle-free access without the need for keys.
@@ -17,7 +17,7 @@ Inject Nexus Hub into your favorite game, and enjoy a streamlined, efficient gam
 ## Status
 
 - **Current Status**: Active
-- **Supported Games**: 18
+- **Supported Games**: 19
 
 ## Links
 
