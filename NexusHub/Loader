@@ -27,6 +27,7 @@ local success, err = pcall(function()
         [100512225977376]="1SJR",
         [76869049556129]="RTH",
         [8607126407]="RTH",
+        [91828212665207]="1SWHO",
     }
 
     local c=b[game.PlaceId]if c then a:SendNotification("Success","Game Supported! Loading...",5)loadstring(game:HttpGet("https://raw.githubusercontent.com/jacklebeignet/scripts/main/NexusHub/"..c))()else a:SendNotification("Error","No script was found for this game :(\n\nJoin the Discord to see which games are supported: dsc.gg/beignet",8)end
