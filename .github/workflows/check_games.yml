@@ -40,19 +40,27 @@ jobs:
             expected="-- Currently supported games: $FILE_COUNT"
             current=$(sed -n '2p' "$loader_file")
             if [[ "$current" != *"$expected"* ]]; then
-              sed -i '' "2s|.*|$expected|" "$loader_file"
+              sed -i "2s|.*|$expected|" "$loader_file"
               git add "$loader_file"
               updated=true
               echo "Updated Loader.luau."
             fi
           fi
 
+          # Update Loader (keep in sync with Loader.luau)
+          loader_symlink="NexusHub/Loader"
+          if [ -f "$loader_file" ] && [ -f "$loader_symlink" ] && [ ! -L "$loader_symlink" ]; then
+            cp "$loader_file" "$loader_symlink"
+            git add "$loader_symlink"
+            echo "Synced Loader with Loader.luau."
+          fi
+
           # Update README.md
           readme_file="NexusHub/README.md"
           if [ -f "$readme_file" ]; then
-            sed -i '' "s|- \*\*Supported Games\*\*:.*|- **Supported Games**: $FILE_COUNT|" "$readme_file"
+            sed -i "s|- \*\*Supported Games\*\*:.*|- **Supported Games**: $FILE_COUNT|" "$readme_file"
             # Update the description line with the correct game count
-            sed -i '' -E "s|(Nexus Hub is an innovative multi-game hub designed to support over )[0-9]+(\+)?( games,?)|\1${FILE_COUNT}+\3|" "$readme_file"
+            sed -i -E "s|(Nexus Hub is an innovative multi-game hub designed to support over )[0-9]+(\+)?( games,?)|\1${FILE_COUNT}+\3|" "$readme_file"
             git add "$readme_file"
             updated=true
             echo "Updated README.md."
@@ -61,8 +69,8 @@ jobs:
           # Update website
           index_file="docs/index.html"
           if [ -f "$index_file" ]; then
-            sed -i '' -E "s|Nexus Hub is an innovative multi-game hub designed to support over [0-9]+(\+)? games,?[^.]*\.?|Nexus Hub is an innovative multi-game hub designed to support over ${FILE_COUNT}+ games.|" "$index_file"
-            sed -i '' -E "s/[0-9]+(\+)? Games/${FILE_COUNT}+ Games/gI" "$index_file"
+            sed -i -E "s|Nexus Hub is an innovative multi-game hub designed to support over [0-9]+(\+)? games,?[^.]*\.?|Nexus Hub is an innovative multi-game hub designed to support over ${FILE_COUNT}+ games.|" "$index_file"
+            sed -i -E "s/[0-9]+(\+)? Games/${FILE_COUNT}+ Games/gI" "$index_file"
             git add "$index_file"
             updated=true
             echo "Updated docs/index.html."
@@ -70,7 +78,7 @@ jobs:
 
           if [ "$updated" = true ]; then
             git diff --cached --quiet && echo "No changes detected." || (
-              git commit -m "Update supported games count across NexusHub"
+              git commit -m "chore: update supported game count and loader"
               git push
             )
           else
