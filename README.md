@@ -34,6 +34,12 @@ Thanks to all the contributors who can update my scripts!
   <img src="https://contrib.rocks/image?repo=jacklebeignet/scripts" />
 </a>
 
-## ⭐️ Star History
+## Star History
 
-[![Star History Chart](https://api.star-history.com/svg?repos=jacklebeignet/scripts&type=Date)](https://www.star-history.com/#jacklebeignet/scripts&Date)
+<a href="https://www.star-history.com/?repos=jacklebeignet%2Fscripts&type=date&legend=top-left">
+ <picture>
+   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/image?repos=jacklebeignet/scripts&type=date&theme=dark&legend=top-left" />
+   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/image?repos=jacklebeignet/scripts&type=date&legend=top-left" />
+   <img alt="Star History Chart" src="https://api.star-history.com/image?repos=jacklebeignet/scripts&type=date&legend=top-left" />
+ </picture>
+</a>
