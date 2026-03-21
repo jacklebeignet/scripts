@@ -30,7 +30,7 @@ local success, err = pcall(function()
         [91828212665207]="1SWHO",
     }
 
-    local c=b[game.PlaceId]if c then a:SendNotification("Success","Game Supported! Loading...",5)loadstring(game:HttpGet("https://raw.githubusercontent.com/jacklebeignet/scripts/main/NexusHub/"..c))()else a:SendNotification("Error","No script was found for this game :(\n\nJoin the Discord to see which games are supported: dsc.gg/beignet",8)end
+    local c=b[game.PlaceId]if c then a:SendNotification("Success","Game Supported! Loading...",5)loadstring(game:HttpGet("https://raw.githubusercontent.com/jacklebeignet/scripts/main/NexusHub/"..c..".luau"))()else a:SendNotification("Error","No script was found for this game :(\n\nJoin the Discord to see which games are supported: dsc.gg/beignet",8)end
 
 end)
 
