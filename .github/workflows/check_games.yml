@@ -47,14 +47,6 @@ jobs:
             fi
           fi
 
-          # Update Loader (keep in sync with Loader.luau)
-          loader_symlink="NexusHub/Loader"
-          if [ -f "$loader_file" ] && [ -f "$loader_symlink" ] && [ ! -L "$loader_symlink" ]; then
-            cp "$loader_file" "$loader_symlink"
-            git add "$loader_symlink"
-            echo "Synced Loader with Loader.luau."
-          fi
-
           # Update README.md
           readme_file="NexusHub/README.md"
           if [ -f "$readme_file" ]; then

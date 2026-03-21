@@ -1,0 +1,4 @@
+-- This file is the old Loader of NexusHub
+-- Please refer to the new loader in the README.md
+
+loadstring(game:HttpGet("https://raw.githubusercontent.com/jacklebeignet/scripts/refs/heads/main/NexusHub/Loader.luau"))()

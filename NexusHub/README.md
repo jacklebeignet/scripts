@@ -5,9 +5,10 @@
 
 ## Description
 
-Nexus Hub is an innovative multi-game hub designed to support over 19+ games, ensuring a seamless user experience. This hub offers a wide range of features, all in one place, and is optimized for both desktop and mobile users. 
+Nexus Hub is an innovative multi-game hub designed to support over 19+ games, ensuring a seamless user experience. This hub offers a wide range of features, all in one place, and is optimized for both desktop and mobile users.
 
-### Key Features:
+### Key Features
+
 - **Keyless Access**: Enjoy hassle-free access without the need for keys.
 - **Mobile Optimization**: Fully optimized for mobile devices, providing an excellent user experience on the go.
 - **Compatibility**: Ensures compatibility with the latest game versions, allowing you to stay up-to-date with your favorite games.
@@ -28,13 +29,15 @@ Inject Nexus Hub into your favorite game, and enjoy a streamlined, efficient gam
 To directly execute Nexus Hub, use the following script:
 
 **Stable Version**:
+
 ```lua
 loadstring(game:HttpGet("https://wtf.skibiditoi.lat/s/nexus-hub.lua"))()
 ```
 
 **Dev Version**:
+
 ```lua
-loadstring(game:HttpGet("https://raw.githubusercontent.com/jacklebeignet/scripts/refs/heads/main/NexusHub/Loader"))()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/jacklebeignet/scripts/refs/heads/main/NexusHub/Loader.luau"))()
 ```
 
 > [!NOTE]
