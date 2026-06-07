@@ -32,7 +32,7 @@ local d={
 [91828212665207]="1SWHO",
 }
 
-local e=d[game.PlaceId]if e then c:SendNotification("Success","Game Supported! Loading...",5)loadstring(game:HttpGet("https://raw.githubusercontent.com/jacklebeignet/scripts/main/NexusHub/"..e..".luau"))()else c:SendNotification("Error","No script was found for this game :(\n\nJoin the Discord to see which games are supported: dsc.gg/beignet",8)end
+local e=d[game.PlaceId]if e then c:SendNotification("Success","Game Supported! Loading...",5)loadstring(game:HttpGet("https://cdn.jsdelivr.net/gh/jacklebeignet/scripts@master/NexusHub/"..e..".luau"))()else c:SendNotification("Error","No script was found for this game :(\n\nJoin the Discord to see which games are supported: dsc.gg/beignet",8)end
 
 end)
 

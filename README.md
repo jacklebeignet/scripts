@@ -6,6 +6,7 @@
 [![Forks](https://img.shields.io/github/forks/jacklebeignet/scripts.svg)](https://github.com/jacklebeignet/scripts/network/members)
 [![Stars](https://img.shields.io/github/stars/jacklebeignet/scripts.svg)](https://github.com/jacklebeignet/scripts/stargazers)
 [![Issues](https://img.shields.io/github/issues/jacklebeignet/scripts.svg)](https://github.com/jacklebeignet/scripts/issues)
+[![jsDelivr Hits](https://data.jsdelivr.com/v1/package/gh/jacklebeignet/scripts/badge?style=rounded)](https://www.jsdelivr.com/package/gh/jacklebeignet/scripts)
 
 </div>
 
