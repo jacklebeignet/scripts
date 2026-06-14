@@ -5,7 +5,7 @@
 local a="1.0"print("🪐 Nexus Hub Version: "..a)
 
 local b,c=pcall(function()
-local b=loadstring(game:HttpGet"https://raw.githubusercontent.com/IceMinisterq/Notification-Library/Main/Library.lua")
+local b=loadstring(game:HttpGet"https://cdn.jsdelivr.net/gh/IceMinisterq/Notification-Library@master/Library.lua")
 if not b then return end
 local c=b()
 
