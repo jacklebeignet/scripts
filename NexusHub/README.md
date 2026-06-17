@@ -31,7 +31,7 @@ To directly execute Nexus Hub, use the following script:
 **Stable Version**:
 
 ```lua
-loadstring(game:HttpGet("https://wtf.skibiditoi.lat/s/nexus-hub.lua"))()
+loadstring(game:HttpGet("https://cdn.jsdelivr.net/gh/jacklebeignet/scripts@master/NexusHub/Loader.luau"))()
 ```
 
 **Dev Version**:
