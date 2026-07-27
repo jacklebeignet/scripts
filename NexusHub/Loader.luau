@@ -38,5 +38,5 @@ for i, url in ipairs(sources) do
     end
 end
 if not success then
-    error("🪐 Nexus Hub: All servers are down. Please try again later.")
+    error("🪐 Nexus Hub: All servers are down. Please try again later or contact us.")
 end
