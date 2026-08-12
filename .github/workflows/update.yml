@@ -1,0 +1,56 @@
+name: Update Discord Channel with Stats
+
+on:
+  schedule:
+    - cron: '0 */6 * * *'
+  workflow_dispatch: {}
+
+jobs:
+  update-stats:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fetch jsDelivr stats
+        id: stats
+        run: |
+          set -euo pipefail
+
+          RESPONSE=$(curl -sf "https://data.jsdelivr.com/v1/stats/packages/gh/jacklebeignet/scripts/versions?period=year")
+
+          TOTAL_HITS=$(echo "$RESPONSE" | jq '[.[].hits.total] | add // 0')
+
+          FORMATTED_HITS=$(awk -v n="$TOTAL_HITS" 'BEGIN {
+            n = n + 0;
+            if (n >= 1000000) {
+              printf "%.2fM", n / 1000000;
+            } else if (n >= 1000) {
+              printf "%.2fK", n / 1000;
+            } else {
+              printf "%d", n;
+            }
+          }')
+
+          echo "total_hits=$TOTAL_HITS" >> "$GITHUB_OUTPUT"
+          echo "formatted_hits=$FORMATTED_HITS" >> "$GITHUB_OUTPUT"
+
+      - name: Update Discord channel name
+        env:
+          DISCORD_BOT_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
+          DISCORD_CHANNEL_ID: ${{ secrets.DISCORD_CHANNEL_ID }}
+        run: |
+          set -euo pipefail
+
+          NEW_NAME="Executions: ${{ steps.stats.outputs.formatted_hits }}"
+
+          HTTP_STATUS=$(curl -s -o /tmp/discord_response.json -w "%{http_code}" \
+            -X PATCH "https://discord.com/api/v10/channels/${DISCORD_CHANNEL_ID}" \
+            -H "Authorization: Bot ${DISCORD_BOT_TOKEN}" \
+            -H "Content-Type: application/json" \
+            -d "$(jq -n --arg name "$NEW_NAME" '{name: $name}')")
+
+          echo "Discord API status: $HTTP_STATUS"
+          cat /tmp/discord_response.json
+
+          if [ "$HTTP_STATUS" -ge 300 ]; then
+            echo "::error::Failed to update Discord channel (HTTP $HTTP_STATUS)"
+            exit 1
+          fi
