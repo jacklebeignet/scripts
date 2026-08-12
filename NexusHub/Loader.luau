@@ -18,6 +18,9 @@
     🛟 Support Server: https://dsc.gg/beignet
 --]]
 
+local execName = identifyexecutor and identifyexecutor() or (getexecutorname and getexecutorname()) or "Unknown"
+print("🪐 Nexus Hub | Using " .. execName)
+
 local sources = {
 "https://beignet-api.wisp.uno/static/Loader.luau",
 "http://beignet.deez.nz:15037/static/Loader.luau"
