@@ -1,4 +1,4 @@
-<h1 align="center">Scripts</h1>
+<h1 align="center">Beignet Scripts</h1>
 <p align="center"><strong>Elegant. Powerful. Revolutionary.</strong></p>
 
 > [!WARNING]
