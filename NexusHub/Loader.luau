@@ -21,34 +21,34 @@
 local execName, execVersion
 
 if identifyexecutor then
-    execName, execVersion = identifyexecutor()
+	execName, execVersion = identifyexecutor()
 elseif getexecutorname then
-    execName, execVersion = getexecutorname()
+	execName, execVersion = getexecutorname()
 else
-    execName, execVersion = "Unknown", "Unknown"
+	execName, execVersion = "Unknown", "Unknown"
 end
 
 print("🪐 Nexus Hub | Using " .. execName .. " " .. execVersion)
 
 local sources = {
-"https://beignet-api.wisp.uno/static/Loader.luau",
-"http://beignet.deez.nz:15037/static/Loader.luau"
+	"https://beignet-api.wisp.uno/static/Loader.luau",
+	"http://beignet.deez.nz:15037/static/Loader.luau",
 }
 
 local success = false
 for i, url in ipairs(sources) do
-    local ok = pcall(function()
-        loadstring(game:HttpGet(url))()
-    end)
-    if ok then
-        success = true
-        break
-    else
-        if i < #sources then
-            warn("🪐 Nexus Hub: URL " .. i .. " failed. Trying the " .. (i + 1) .. "...")
-        end
-    end
+	local ok = pcall(function()
+		loadstring(game:HttpGet(url))()
+	end)
+	if ok then
+		success = true
+		break
+	else
+		if i < #sources then
+			warn("🪐 Nexus Hub: URL " .. i .. " failed. Trying the " .. (i + 1) .. "...")
+		end
+	end
 end
 if not success then
-    error("🪐 Nexus Hub: All servers are down. Please try again later or contact us.")
+	error("🪐 Nexus Hub: All servers are down. Please try again later or contact us.")
 end
