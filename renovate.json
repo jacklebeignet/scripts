@@ -2,5 +2,17 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
     "config:recommended"
+  ],
+  "customManagers": [
+    {
+      "customType": "regex",
+      "managerFilePatterns": ["/(^|/)rokit\\.toml$/"],
+      "matchStrings": [
+        "\"(?<packageName>[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+)@(?<currentValue>[^\"\\s]+)\""
+      ],
+      "depNameTemplate": "{{{packageName}}}",
+      "datasourceTemplate": "github-tags",
+      "versioningTemplate": "semver"
+    }
   ]
 }
