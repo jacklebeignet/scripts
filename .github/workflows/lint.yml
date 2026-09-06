@@ -1,0 +1,23 @@
+name: Lint
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  selene:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install selene
+        run: |
+          set -euo pipefail
+          VERSION=$(sed -n 's/^selene = "Kampfkarren\/selene@\([^"]*\)"/\1/p' rokit.toml)
+          curl -sSfL "https://github.com/Kampfkarren/selene/releases/download/${VERSION}/selene-${VERSION}-linux.zip" -o /tmp/selene.zip
+          unzip -o /tmp/selene.zip -d /tmp/selene
+          sudo install -m 755 /tmp/selene/selene /usr/local/bin/selene
+          selene --version
+
+      - name: Run selene
+        run: selene .
