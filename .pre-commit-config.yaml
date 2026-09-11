@@ -12,7 +12,7 @@ repos:
   - repo: https://github.com/JohnnyMorganz/StyLua
     rev: v2.5.2
     hooks:
-      - id: stylua-system
+      - id: stylua-github
         args: [--check]
         types: [file]
         files: (\.luau?$|(^|/)[^./]+$)
