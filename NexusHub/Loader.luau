@@ -1,3 +1,5 @@
+--!strict
+
 --[[
     🪐 Nexus Hub - Bootstrapper
 
@@ -18,7 +20,7 @@
     🛟 Support Server: https://dsc.gg/beignet
 --]]
 
-local execName, execVersion
+local execName: string, execVersion: string
 
 if identifyexecutor then
 	execName, execVersion = identifyexecutor()
@@ -30,14 +32,14 @@ end
 
 print("🪐 Nexus Hub | Using " .. execName .. " " .. execVersion)
 
-local sources = {
+local sources: { string } = {
 	"https://beignet-api.wisp.uno/static/Loader.luau",
 	"http://beignet.deez.nz:15037/static/Loader.luau",
 }
 
-local success = false
-for i, url in ipairs(sources) do
-	local ok = pcall(function()
+local success: boolean = false
+for i: number, url: string in ipairs(sources) do
+	local ok: boolean = pcall(function(): ()
 		loadstring(game:HttpGet(url))()
 	end)
 	if ok then
