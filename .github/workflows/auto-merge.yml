@@ -1,0 +1,140 @@
+name: Auto-merge pre-commit.ci PRs
+
+# Merges pull requests opened by pre-commit.ci once CI is green.
+# Always squash-merges. Runs from the base branch and never checks out or
+# executes code from the pull request.
+# Renovate handles its own automerge; Dependabot PRs are ignored.
+
+on:
+  pull_request_target:
+    types: [opened, reopened, synchronize, ready_for_review]
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: auto-merge-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  auto-merge:
+    name: auto-merge
+    if: >-
+      github.event.pull_request.user.login == 'pre-commit-ci[bot]' &&
+      github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+      PR_NUMBER: ${{ github.event.pull_request.number }}
+      # gh reports checks by job name; ignore this workflow's own job.
+      SELF_CHECK: auto-merge
+    steps:
+      - name: Squash-merge pull request
+        run: |
+          set -euo pipefail
+
+          pr="$PR_NUMBER"
+
+          pr_json=$(gh api "repos/$GH_REPO/pulls/$pr")
+          state=$(jq -r '.state' <<<"$pr_json")
+          draft=$(jq -r '.draft' <<<"$pr_json")
+          base_ref=$(jq -r '.base.ref' <<<"$pr_json")
+          head_ref=$(jq -r '.head.ref' <<<"$pr_json")
+          head_repo=$(jq -r '.head.repo.full_name // ""' <<<"$pr_json")
+          sha=$(jq -r '.head.sha' <<<"$pr_json")
+          author=$(jq -r '.user.login' <<<"$pr_json")
+
+          reason=""
+          if [[ "$state" != "open" ]]; then
+            reason="state is '$state'"
+          elif [[ "$draft" == "true" ]]; then
+            reason="it is a draft"
+          elif [[ "$base_ref" != "main" ]]; then
+            reason="base branch is '$base_ref', not 'main'"
+          elif [[ "$head_repo" != "$GH_REPO" ]]; then
+            reason="head branch is from '$head_repo', not this repository"
+          elif [[ "$author" != "pre-commit-ci[bot]" ]]; then
+            reason="author '$author' is not pre-commit-ci"
+          elif [[ "$head_ref" != "pre-commit-ci-update-config" ]]; then
+            reason="branch '$head_ref' is not the pre-commit-ci branch"
+          fi
+
+          if [[ -n "$reason" ]]; then
+            echo "Skipping #$pr: $reason."
+            exit 0
+          fi
+
+          # GitHub computes mergeability asynchronously.
+          mergeable=$(jq -r '.mergeable' <<<"$pr_json")
+          for _ in 1 2 3 4 5 6; do
+            if [[ "$mergeable" == "true" || "$mergeable" == "false" ]]; then
+              break
+            fi
+            sleep 5
+            pr_json=$(gh api "repos/$GH_REPO/pulls/$pr")
+            mergeable=$(jq -r '.mergeable' <<<"$pr_json")
+          done
+
+          if [[ "$mergeable" != "true" ]]; then
+            echo "Skipping #$pr: GitHub reports it is not mergeable."
+            exit 0
+          fi
+
+          # Wait for both the repository's Lint job and pre-commit.ci's own
+          # check. If either check is renamed or removed, this workflow
+          # safely stops merging instead of merging untested changes.
+          echo "Waiting for checks on $sha..."
+          deadline=$((SECONDS + 600))
+
+          while true; do
+            checks_json=$(gh pr checks "$pr" --json name,state,bucket 2>/dev/null || true)
+            if ! jq -e 'type == "array"' >/dev/null 2>&1 <<<"$checks_json"; then
+              checks_json='[]'
+            fi
+
+            read -r total selene precommit pending failed < <(
+              jq -r --arg self "$SELF_CHECK" '
+                map(select(.name != $self)) as $checks
+                | [
+                    ($checks | length),
+                    ($checks | any(.name == "selene")),
+                    ($checks | any(.name == "pre-commit.ci - pr")),
+                    ($checks | map(select(.bucket == "pending")) | length),
+                    ($checks | map(select(.bucket == "fail" or .bucket == "cancel")) | length)
+                  ]
+                | @tsv
+              ' <<<"$checks_json"
+            )
+
+            if (( failed > 0 )); then
+              echo "Skipping #$pr: one or more checks failed."
+              exit 0
+            fi
+
+            if (( total > 0 && pending == 0 )) \
+              && [[ "$selene" == "true" ]] \
+              && [[ "$precommit" == "true" ]]; then
+              break
+            fi
+
+            if (( SECONDS >= deadline )); then
+              echo "Skipping #$pr: timed out waiting for checks (${total} registered, ${pending} pending)."
+              exit 0
+            fi
+
+            sleep 10
+          done
+
+          # Make sure the commit we validated is still the PR head, then
+          # merge with --match-head-commit as a second safety net.
+          current_sha=$(gh api "repos/$GH_REPO/pulls/$pr" --jq '.head.sha')
+          if [[ "$current_sha" != "$sha" ]]; then
+            echo "Skipping #$pr: the head commit changed while checks were running."
+            exit 0
+          fi
+
+          gh pr merge "$pr" --squash --delete-branch --match-head-commit "$sha"
+          echo "Merged #$pr (squash)."
